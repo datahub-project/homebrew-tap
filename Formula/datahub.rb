@@ -89,9 +89,11 @@ class Datahub < Formula
     sha256 "eb3f3c99ec0d456ca6cd2a7f08f7d4e91771bef51b01bdd9580cc6450fe1251e"
   end
 
+  # Pure-Python wheel: click-spinner 0.1.10's sdist setup.py uses
+  # configparser.SafeConfigParser, removed in Python 3.12.
   resource "click-spinner" do
-    url "https://files.pythonhosted.org/packages/af/3a/7dbc558fcf0ae9e2e8b7ccc52daeb4eaf32b21f851497f5b409e1638dcee/click-spinner-0.1.10.tar.gz"
-    sha256 "87eacf9d7298973a25d7615ef57d4782aebf913a532bba4b28a37e366e975daf"
+    url "https://files.pythonhosted.org/packages/93/2a/04893832bfeddc2d40a7de2e8153b3085f12d63507d91a9cf0157dc3a1c2/click_spinner-0.1.10-py2.py3-none-any.whl"
+    sha256 "d1ffcff1fdad9882396367f15fb957bcf7f5c64ab91927dee2127e0d2991ee84"
   end
 
   resource "cramjam" do
