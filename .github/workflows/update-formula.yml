@@ -1,5 +1,10 @@
 name: Update formula on PyPI release
 
+# Fully automated: hourly, detect a new acryl-datahub release on PyPI, bump the
+# formula (url + sha256 + the full pinned Python resource tree), build & test it
+# on macOS and Linux, and only then open a PR and merge it. Nothing merges unless
+# both builds pass, so no human is in the loop on a green release.
+
 on:
   schedule:
     - cron: "0 * * * *"
@@ -9,30 +14,46 @@ permissions:
   contents: write
   pull-requests: write
 
+concurrency:
+  group: update-formula
+  cancel-in-progress: false
+
 jobs:
-  bump:
-    runs-on: macos-latest
-    timeout-minutes: 60
+  # Cheap hourly check -- no Homebrew, just compare PyPI to the formula.
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      bump: ${{ steps.v.outputs.bump }}
+      new: ${{ steps.v.outputs.latest }}
     steps:
       - uses: actions/checkout@v5
-
-      - uses: Homebrew/actions/setup-homebrew@main
-
-      - name: Determine latest vs current version
-        id: pypi
+      - id: v
         run: |
           latest=$(curl -fsS https://pypi.org/pypi/acryl-datahub/json | jq -r .info.version)
           current=$(grep -oE 'acryl_datahub-[0-9.]+\.tar\.gz' Formula/datahub.rb | head -1 | sed -E 's/.*-([0-9.]+)\.tar\.gz/\1/')
-          echo "latest=$latest"   >> "$GITHUB_OUTPUT"
-          echo "current=$current" >> "$GITHUB_OUTPUT"
-          echo "Latest PyPI: $latest"
-          echo "Formula:     $current"
+          echo "latest=$latest" >> "$GITHUB_OUTPUT"
+          if [ "$latest" != "$current" ]; then
+            echo "bump=true"  >> "$GITHUB_OUTPUT"
+          else
+            echo "bump=false" >> "$GITHUB_OUTPUT"
+          fi
+          echo "PyPI: $latest | Formula: $current"
 
-      - name: Bump formula
-        if: steps.pypi.outputs.latest != steps.pypi.outputs.current
-        env:
-          NEW: ${{ steps.pypi.outputs.latest }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # Generate the bumped formula once (macOS) and validate it builds there.
+  # The resulting formula file is shared with the Linux test and merge jobs.
+  generate:
+    needs: prepare
+    if: needs.prepare.outputs.bump == 'true'
+    runs-on: macos-latest
+    timeout-minutes: 90
+    env:
+      NEW: ${{ needs.prepare.outputs.new }}
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+    steps:
+      - uses: actions/checkout@v5
+      - uses: Homebrew/actions/setup-homebrew@main
+
+      - name: Generate bumped formula
         run: |
           meta=$(curl -fsS "https://pypi.org/pypi/acryl-datahub/${NEW}/json")
           sdist=$(echo "$meta" | jq -r '.urls[] | select(.packagetype=="sdist") | .url')
@@ -40,13 +61,12 @@ jobs:
 
           # Neither `brew bump-formula-pr` nor an in-place `brew
           # update-python-resources` works here: both share an updater that
-          # aborts ("Unable to update resource blocks automatically") whenever
-          # the SET of Python resources changes between releases -- which it does
-          # for acryl-datahub on nearly every bump (deps added/removed, plus PyPI
-          # name case normalization like PyYAML -> pyyaml). So we bump the main
-          # url/sha256 ourselves, generate a fresh resource section with
-          # --print-only (which skips the brittle reconciliation), and splice it
-          # in, replacing the old section wholesale.
+          # aborts whenever the SET of Python resources changes between releases
+          # -- which it does for acryl-datahub on nearly every bump (deps
+          # added/removed, plus PyPI name case normalization like PyYAML ->
+          # pyyaml). So we bump the main url/sha256 ourselves, generate a fresh
+          # resource section with --print-only (which skips the brittle
+          # reconciliation), and splice it in, replacing the old section.
 
           # setup-homebrew already taps this repo as datahub-project/tap from the
           # checkout, so edits below land on the files git tracks here.
@@ -64,13 +84,11 @@ jobs:
           open(path, "w").write(head + tail)
           PY
 
-          # 2. Resolve the new dependency tree and capture fresh resource blocks
-          #    on stdout (progress goes to stderr).
+          # 2. Resolve the new dependency tree; capture fresh blocks on stdout.
           brew update-python-resources --print-only --version "$NEW" \
             datahub-project/tap/datahub > resources.txt
 
-          # 3. Replace the entire resource section (first `resource` .. the line
-          #    before `def install`) with the freshly generated blocks.
+          # 3. Replace the whole resource section with the generated blocks.
           python3 - <<'PY'
           path = "Formula/datahub.rb"
           src = open(path).read()
@@ -83,17 +101,72 @@ jobs:
           PY
           rm -f resources.txt
 
-          # 4. Open a PR with the result.
+      - name: Upload generated formula
+        uses: actions/upload-artifact@v4
+        with:
+          name: formula
+          path: Formula/datahub.rb
+
+      - name: Build & test (macOS)
+        run: |
+          brew install --build-from-source --verbose datahub-project/tap/datahub
+          brew test --verbose datahub-project/tap/datahub
+
+  # Independently build & test the same generated formula on Linux.
+  test-linux:
+    needs: [prepare, generate]
+    if: needs.prepare.outputs.bump == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+    steps:
+      - uses: actions/checkout@v5
+      - uses: Homebrew/actions/setup-homebrew@main
+      - uses: actions/download-artifact@v4
+        with:
+          name: formula
+          path: dl
+      - name: Build & test (Linux)
+        run: |
+          cp dl/datahub.rb Formula/datahub.rb
+          brew install --build-from-source --verbose datahub-project/tap/datahub
+          brew test --verbose datahub-project/tap/datahub
+
+  # Both platforms are green -- open the PR and merge it.
+  merge:
+    needs: [prepare, generate, test-linux]
+    if: needs.prepare.outputs.bump == 'true'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NEW: ${{ needs.prepare.outputs.new }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        with:
+          name: formula
+          path: dl
+      - name: Commit, open PR, and merge
+        run: |
+          cp dl/datahub.rb Formula/datahub.rb
           branch="bump-acryl-datahub-${NEW}"
           git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"
           git add Formula/datahub.rb
           git commit -m "datahub ${NEW}"
           # Push with the token in the URL: the credential actions/checkout
-          # persists isn't reachable once setup-homebrew taps this repo.
-          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+          # persists isn't reachable for git push here. Force in case a stale
+          # branch from an interrupted run exists.
+          git push --force \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
             "HEAD:${branch}"
           gh pr create --base main --head "$branch" \
             --title "datahub ${NEW}" \
-            --body "Automated bump to acryl-datahub ${NEW} (url, sha256 and Python resources)."
+            --body "Automated bump to acryl-datahub ${NEW} (url, sha256 and Python resources). Built and tested on macOS and Linux before merge." \
+            || echo "PR already exists for ${branch}"
+          # Merge (retry briefly while GitHub computes mergeability).
+          for i in 1 2 3 4 5 6; do
+            gh pr merge "$branch" --squash --delete-branch && break || sleep 10
+          done
