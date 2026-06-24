@@ -55,9 +55,8 @@ jobs:
 
       - name: Generate bumped formula
         run: |
-          meta=$(curl -fsS "https://pypi.org/pypi/acryl-datahub/${NEW}/json")
-          sdist=$(echo "$meta" | jq -r '.urls[] | select(.packagetype=="sdist") | .url')
-          sha=$(echo "$meta"   | jq -r '.urls[] | select(.packagetype=="sdist") | .digests.sha256')
+          # PyPI lookups are done in Python with json.loads(strict=False): some
+          # PyPI metadata contains raw control characters that strict jq rejects.
 
           # Neither `brew bump-formula-pr` nor an in-place `brew
           # update-python-resources` works here: both share an updater that
@@ -72,14 +71,19 @@ jobs:
           # checkout, so edits below land on the files git tracks here.
 
           # 1. Bump the top-level url + sha256 (the stanza before the first resource).
-          python3 - "$sdist" "$sha" <<'PY'
-          import re, sys
-          sdist, sha = sys.argv[1], sys.argv[2]
+          python3 - "$NEW" <<'PY'
+          import json, re, sys, urllib.request
+          new = sys.argv[1]
+          data = urllib.request.urlopen(
+              f"https://pypi.org/pypi/acryl-datahub/{new}/json").read().decode()
+          meta = json.loads(data, strict=False)
+          sdist = next(u for u in meta["urls"] if u["packagetype"] == "sdist")
+          url, sha = sdist["url"], sdist["digests"]["sha256"]
           path = "Formula/datahub.rb"
           src = open(path).read()
           cut = src.index('resource "')          # only touch the package's own stanza
           head, tail = src[:cut], src[cut:]
-          head = re.sub(r'url "[^"]*"', f'url "{sdist}"', head, count=1)
+          head = re.sub(r'url "[^"]*"', f'url "{url}"', head, count=1)
           head = re.sub(r'sha256 "[^"]*"', f'sha256 "{sha}"', head, count=1)
           open(path, "w").write(head + tail)
           PY
@@ -87,6 +91,29 @@ jobs:
           # 2. Resolve the new dependency tree; capture fresh blocks on stdout.
           brew update-python-resources --print-only --version "$NEW" \
             datahub-project/tap/datahub > resources.txt
+
+          # 2b. update-python-resources always picks sdists, but click-spinner's
+          #     sdist setup.py uses configparser.SafeConfigParser (removed in
+          #     py3.12+) and can't build on python@3.13. Re-pin its universal
+          #     wheel -- this re-applies a manual fix the regeneration clobbers.
+          python3 - <<'PY'
+          import json, re, urllib.request
+          data = urllib.request.urlopen(
+              "https://pypi.org/pypi/click-spinner/0.1.10/json").read().decode()
+          meta = json.loads(data, strict=False)
+          wheel = next(u for u in meta["urls"] if u["packagetype"] == "bdist_wheel")
+          url, sha = wheel["url"], wheel["digests"]["sha256"]
+          path = "resources.txt"
+          s = open(path).read()
+          def repl(m):
+              b = re.sub(r'url "[^"]*"', f'url "{url}"', m.group(0))
+              return re.sub(r'sha256 "[^"]*"', f'sha256 "{sha}"', b)
+          s, n = re.subn(r'  resource "click-spinner" do.*?\n  end', repl, s, flags=re.S)
+          if n != 1:
+              raise SystemExit(f"expected 1 click-spinner block, patched {n}")
+          open(path, "w").write(s)
+          print("re-pinned click-spinner to wheel:", url)
+          PY
 
           # 3. Replace the whole resource section with the generated blocks.
           python3 - <<'PY'
