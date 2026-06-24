@@ -12,6 +12,7 @@ permissions:
 jobs:
   bump:
     runs-on: macos-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v5
 
@@ -39,6 +40,10 @@ jobs:
           # setup-homebrew already taps this repo (datahub-project/tap) from its
           # checkout; re-tapping with the local path triggers a "remote mismatch"
           # error, so we rely on the existing tap here.
-          brew bump-formula-pr --no-browse --no-fork \
+          # --install-dependencies lets bump-formula-pr install python@3.13,
+          # rust and openssl@3 so it can build the virtualenv and regenerate the
+          # pinned Python resource blocks. Without it the runner has no build
+          # deps and resource resolution fails instantly.
+          brew bump-formula-pr --no-browse --no-fork --install-dependencies \
             --url "$sdist" --sha256 "$sha" \
             datahub-project/tap/datahub
