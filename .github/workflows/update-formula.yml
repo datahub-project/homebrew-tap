@@ -38,13 +38,15 @@ jobs:
           sdist=$(echo "$meta" | jq -r '.urls[] | select(.packagetype=="sdist") | .url')
           sha=$(echo "$meta"   | jq -r '.urls[] | select(.packagetype=="sdist") | .digests.sha256')
 
-          # We don't use `brew bump-formula-pr` here: its inline resource updater
-          # aborts ("Unable to update resource blocks automatically") whenever the
-          # set of Python resources changes between releases -- which it does for
-          # acryl-datahub on nearly every bump (deps added/removed, and PyPI name
-          # case normalization like PyYAML -> pyyaml). Instead we bump the main
-          # url/sha256 ourselves and let `brew update-python-resources` regenerate
-          # the whole resource section from scratch, which handles add/remove/case.
+          # Neither `brew bump-formula-pr` nor an in-place `brew
+          # update-python-resources` works here: both share an updater that
+          # aborts ("Unable to update resource blocks automatically") whenever
+          # the SET of Python resources changes between releases -- which it does
+          # for acryl-datahub on nearly every bump (deps added/removed, plus PyPI
+          # name case normalization like PyYAML -> pyyaml). So we bump the main
+          # url/sha256 ourselves, generate a fresh resource section with
+          # --print-only (which skips the brittle reconciliation), and splice it
+          # in, replacing the old section wholesale.
 
           # setup-homebrew already taps this repo as datahub-project/tap from the
           # checkout, so edits below land on the files git tracks here.
@@ -62,10 +64,26 @@ jobs:
           open(path, "w").write(head + tail)
           PY
 
-          # 2. Regenerate all Python resource stanzas for the new version.
-          brew update-python-resources datahub-project/tap/datahub
+          # 2. Resolve the new dependency tree and capture fresh resource blocks
+          #    on stdout (progress goes to stderr).
+          brew update-python-resources --print-only --version "$NEW" \
+            datahub-project/tap/datahub > resources.txt
 
-          # 3. Open a PR with the result.
+          # 3. Replace the entire resource section (first `resource` .. the line
+          #    before `def install`) with the freshly generated blocks.
+          python3 - <<'PY'
+          path = "Formula/datahub.rb"
+          src = open(path).read()
+          blocks = open("resources.txt").read().rstrip()
+          if not blocks.lstrip().startswith("resource "):
+              raise SystemExit("no resource blocks generated; aborting")
+          start = src.index('  resource "')
+          end   = src.index('  def install')
+          open(path, "w").write(src[:start] + blocks + "\n\n" + src[end:])
+          PY
+          rm -f resources.txt
+
+          # 4. Open a PR with the result.
           branch="bump-acryl-datahub-${NEW}"
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
