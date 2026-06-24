@@ -90,7 +90,10 @@ jobs:
           git checkout -b "$branch"
           git add Formula/datahub.rb
           git commit -m "datahub ${NEW}"
-          git push -u origin "$branch"
+          # Push with the token in the URL: the credential actions/checkout
+          # persists isn't reachable once setup-homebrew taps this repo.
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+            "HEAD:${branch}"
           gh pr create --base main --head "$branch" \
             --title "datahub ${NEW}" \
             --body "Automated bump to acryl-datahub ${NEW} (url, sha256 and Python resources)."
