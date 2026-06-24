@@ -32,18 +32,47 @@ jobs:
         if: steps.pypi.outputs.latest != steps.pypi.outputs.current
         env:
           NEW: ${{ steps.pypi.outputs.latest }}
-          HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           meta=$(curl -fsS "https://pypi.org/pypi/acryl-datahub/${NEW}/json")
           sdist=$(echo "$meta" | jq -r '.urls[] | select(.packagetype=="sdist") | .url')
           sha=$(echo "$meta"   | jq -r '.urls[] | select(.packagetype=="sdist") | .digests.sha256')
-          # setup-homebrew already taps this repo (datahub-project/tap) from its
-          # checkout; re-tapping with the local path triggers a "remote mismatch"
-          # error, so we rely on the existing tap here.
-          # --install-dependencies lets bump-formula-pr install python@3.13,
-          # rust and openssl@3 so it can build the virtualenv and regenerate the
-          # pinned Python resource blocks. Without it the runner has no build
-          # deps and resource resolution fails instantly.
-          brew bump-formula-pr --no-browse --no-fork --install-dependencies \
-            --url "$sdist" --sha256 "$sha" \
-            datahub-project/tap/datahub
+
+          # We don't use `brew bump-formula-pr` here: its inline resource updater
+          # aborts ("Unable to update resource blocks automatically") whenever the
+          # set of Python resources changes between releases -- which it does for
+          # acryl-datahub on nearly every bump (deps added/removed, and PyPI name
+          # case normalization like PyYAML -> pyyaml). Instead we bump the main
+          # url/sha256 ourselves and let `brew update-python-resources` regenerate
+          # the whole resource section from scratch, which handles add/remove/case.
+
+          # setup-homebrew already taps this repo as datahub-project/tap from the
+          # checkout, so edits below land on the files git tracks here.
+
+          # 1. Bump the top-level url + sha256 (the stanza before the first resource).
+          python3 - "$sdist" "$sha" <<'PY'
+          import re, sys
+          sdist, sha = sys.argv[1], sys.argv[2]
+          path = "Formula/datahub.rb"
+          src = open(path).read()
+          cut = src.index('resource "')          # only touch the package's own stanza
+          head, tail = src[:cut], src[cut:]
+          head = re.sub(r'url "[^"]*"', f'url "{sdist}"', head, count=1)
+          head = re.sub(r'sha256 "[^"]*"', f'sha256 "{sha}"', head, count=1)
+          open(path, "w").write(head + tail)
+          PY
+
+          # 2. Regenerate all Python resource stanzas for the new version.
+          brew update-python-resources datahub-project/tap/datahub
+
+          # 3. Open a PR with the result.
+          branch="bump-acryl-datahub-${NEW}"
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add Formula/datahub.rb
+          git commit -m "datahub ${NEW}"
+          git push -u origin "$branch"
+          gh pr create --base main --head "$branch" \
+            --title "datahub ${NEW}" \
+            --body "Automated bump to acryl-datahub ${NEW} (url, sha256 and Python resources)."
