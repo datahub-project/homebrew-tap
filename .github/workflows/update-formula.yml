@@ -36,7 +36,9 @@ jobs:
           meta=$(curl -fsS "https://pypi.org/pypi/acryl-datahub/${NEW}/json")
           sdist=$(echo "$meta" | jq -r '.urls[] | select(.packagetype=="sdist") | .url')
           sha=$(echo "$meta"   | jq -r '.urls[] | select(.packagetype=="sdist") | .digests.sha256')
-          brew tap datahub-project/tap "$GITHUB_WORKSPACE"
+          # setup-homebrew already taps this repo (datahub-project/tap) from its
+          # checkout; re-tapping with the local path triggers a "remote mismatch"
+          # error, so we rely on the existing tap here.
           brew bump-formula-pr --no-browse --no-fork \
             --url "$sdist" --sha256 "$sha" \
             datahub-project/tap/datahub
