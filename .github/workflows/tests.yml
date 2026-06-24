@@ -17,5 +17,7 @@ jobs:
       - uses: Homebrew/actions/setup-homebrew@main
       - name: brew test-bot
         run: |
-          brew tap datahub-project/tap "$GITHUB_WORKSPACE"
+          # setup-homebrew already taps this repo as datahub-project/tap from
+          # the checkout; re-tapping with the local path fails with a "remote
+          # mismatch" error, so rely on the existing tap.
           brew test-bot --only-formulae --tap=datahub-project/tap
