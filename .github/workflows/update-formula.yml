@@ -1,14 +1,25 @@
 name: Update formula on PyPI release
 
 # Fully automated: hourly, detect a new acryl-datahub release on PyPI, bump the
-# formula (url + sha256 + the full pinned Python resource tree), build & test it
-# on macOS and Linux, and only then open a PR and merge it. Nothing merges unless
-# both builds pass, so no human is in the loop on a green release.
+# formula (url + sha256 + the full pinned Python resource tree), build a bottle
+# (prebuilt binary) on each supported platform, publish the bottles to a GitHub
+# Release, wire the `bottle do` block into the formula, and merge it. Nothing
+# merges unless every bottle builds and the CLI passes its test, so no human is
+# in the loop on a green release.
+#
+# Bottles mean users get an instant `brew install` (download + unpack) instead
+# of a ~30-minute from-source compile, and because the bottles are Release
+# assets we get a per-platform install download counter we own.
 
 on:
   schedule:
     - cron: "0 * * * *"
   workflow_dispatch:
+    inputs:
+      force:
+        description: "(Re)build and bottle the current PyPI version even if the formula already matches"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -32,20 +43,20 @@ jobs:
           latest=$(curl -fsS https://pypi.org/pypi/acryl-datahub/json | jq -r .info.version)
           current=$(grep -oE 'acryl_datahub-[0-9.]+\.tar\.gz' Formula/datahub.rb | head -1 | sed -E 's/.*-([0-9.]+)\.tar\.gz/\1/')
           echo "latest=$latest" >> "$GITHUB_OUTPUT"
-          if [ "$latest" != "$current" ]; then
+          if [ "$latest" != "$current" ] || [ "${{ inputs.force }}" = "true" ]; then
             echo "bump=true"  >> "$GITHUB_OUTPUT"
           else
             echo "bump=false" >> "$GITHUB_OUTPUT"
           fi
-          echo "PyPI: $latest | Formula: $current"
+          echo "PyPI: $latest | Formula: $current | force: ${{ inputs.force }}"
 
-  # Generate the bumped formula once (macOS) and validate it builds there.
-  # The resulting formula file is shared with the Linux test and merge jobs.
+  # Produce the bumped formula once and share it; both bottle builds and the
+  # publish step start from this identical file.
   generate:
     needs: prepare
     if: needs.prepare.outputs.bump == 'true'
     runs-on: macos-latest
-    timeout-minutes: 90
+    timeout-minutes: 30
     env:
       NEW: ${{ needs.prepare.outputs.new }}
       HOMEBREW_NO_AUTO_UPDATE: "1"
@@ -85,6 +96,10 @@ jobs:
           head, tail = src[:cut], src[cut:]
           head = re.sub(r'url "[^"]*"', f'url "{url}"', head, count=1)
           head = re.sub(r'sha256 "[^"]*"', f'sha256 "{sha}"', head, count=1)
+          # Drop any bottle block from the previous version so publish writes a
+          # fresh one for this version (the sha256 cellar: lines never collide
+          # with the package's own `sha256 "..."` above).
+          head = re.sub(r'\n  bottle do\n.*?\n  end\n', '\n', head, flags=re.S, count=1)
           open(path, "w").write(head + tail)
           PY
 
@@ -134,18 +149,20 @@ jobs:
           name: formula
           path: Formula/datahub.rb
 
-      - name: Build & test (macOS)
-        run: |
-          brew install --build-from-source --verbose datahub-project/tap/datahub
-          brew test --verbose datahub-project/tap/datahub
-
-  # Independently build & test the same generated formula on Linux.
-  test-linux:
+  # Build a bottle on each platform. This IS the build gate: a bottle can only be
+  # produced from a successful --build-bottle install, and `brew test` exercises
+  # the resulting CLI. Each leg uploads its bottle tarball + json.
+  bottle:
     needs: [prepare, generate]
     if: needs.prepare.outputs.bump == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 90
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [macos-14, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 120
     env:
+      NEW: ${{ needs.prepare.outputs.new }}
       HOMEBREW_NO_AUTO_UPDATE: "1"
     steps:
       - uses: actions/checkout@v5
@@ -154,29 +171,87 @@ jobs:
         with:
           name: formula
           path: dl
-      - name: Build & test (Linux)
+      - name: Build bottle
         run: |
           cp dl/datahub.rb Formula/datahub.rb
-          brew install --build-from-source --verbose datahub-project/tap/datahub
+          # Bottles are downloaded from this Release URL once published; bake the
+          # matching root_url into the bottle json now (the release itself is
+          # created later, in publish).
+          root_url="https://github.com/${GITHUB_REPOSITORY}/releases/download/datahub-${NEW}"
+          brew install --build-bottle --verbose datahub-project/tap/datahub
           brew test --verbose datahub-project/tap/datahub
+          brew bottle --json --no-rebuild --root-url="$root_url" \
+            datahub-project/tap/datahub
+          ls -la ./*.bottle.*
+      - name: Upload bottle
+        uses: actions/upload-artifact@v4
+        with:
+          name: bottle-${{ matrix.os }}
+          path: |
+            ./*.bottle.tar.gz
+            ./*.bottle.json
+          if-no-files-found: error
 
-  # Both platforms are green -- open the PR and merge it.
-  merge:
-    needs: [prepare, generate, test-linux]
+  # All bottles built -- publish them to a Release, wire the bottle block into
+  # the formula, and merge.
+  publish:
+    needs: [prepare, generate, bottle]
     if: needs.prepare.outputs.bump == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       NEW: ${{ needs.prepare.outputs.new }}
+      HOMEBREW_NO_AUTO_UPDATE: "1"
     steps:
       - uses: actions/checkout@v5
+      - uses: Homebrew/actions/setup-homebrew@main
       - uses: actions/download-artifact@v4
         with:
-          name: formula
-          path: dl
-      - name: Commit, open PR, and merge
+          path: artifacts
+
+      - name: Publish bottles and merge formula
         run: |
-          cp dl/datahub.rb Formula/datahub.rb
+          # Start from the generated formula (no bottle block yet).
+          cp artifacts/formula/datahub.rb Formula/datahub.rb
+
+          # Gather the per-platform bottle files.
+          mkdir -p bottles
+          find artifacts -name '*.bottle.tar.gz' -exec cp {} bottles/ \;
+          find artifacts -name '*.bottle.json'   -exec cp {} bottles/ \;
+          echo "Collected bottles:" && ls -la bottles/
+
+          tag="datahub-${NEW}"
+
+          # Create the Release if missing (idempotent for retried runs).
+          if ! gh release view "$tag" >/dev/null 2>&1; then
+            gh release create "$tag" \
+              --title "datahub ${NEW}" \
+              --notes "Homebrew bottles for acryl-datahub ${NEW}."
+          fi
+
+          # Upload each bottle as a Release asset under the EXACT name Homebrew
+          # will request. Local bottle files use a double dash (datahub--<v>...),
+          # but the download name is the json's "filename" (single dash) and the
+          # install URL is root_url + "/" + filename -- so derive the name from
+          # the json rather than guessing. --clobber keeps retries idempotent.
+          python3 - <<'PY' > upload_map.txt
+          import glob, json
+          for jf in glob.glob("bottles/*.bottle.json"):
+              for _, data in json.load(open(jf)).items():
+                  for _, t in data["bottle"]["tags"].items():
+                      print(t["local_filename"], t["filename"])
+          PY
+          while read -r local download; do
+            cp "bottles/$local" "bottles/$download"
+            gh release upload "$tag" "bottles/$download" --clobber
+          done < upload_map.txt
+
+          # Write the `bottle do ... end` block (root_url + per-platform sha256)
+          # into the formula from the bottle json files.
+          brew bottle --merge --write --no-commit bottles/*.bottle.json
+
+          # Commit, open PR, merge.
           branch="bump-acryl-datahub-${NEW}"
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -191,9 +266,8 @@ jobs:
             "HEAD:${branch}"
           gh pr create --base main --head "$branch" \
             --title "datahub ${NEW}" \
-            --body "Automated bump to acryl-datahub ${NEW} (url, sha256 and Python resources). Built and tested on macOS and Linux before merge." \
+            --body "Automated bump to acryl-datahub ${NEW} with prebuilt bottles for macOS (arm64) and Linux (x86_64), published to the ${tag} release." \
             || echo "PR already exists for ${branch}"
-          # Merge (retry briefly while GitHub computes mergeability).
           for i in 1 2 3 4 5 6; do
             gh pr merge "$branch" --squash --delete-branch && break || sleep 10
           done
