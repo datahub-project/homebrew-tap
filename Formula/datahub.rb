@@ -15,6 +15,12 @@ class Datahub < Formula
     end
   end
 
+  bottle do
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.6"
+    sha256 cellar: :any, arm64_sonoma: "775c02634464f85ed906ae522892b043c9d88bf0ee0ee74775ed13a6d204169c"
+    sha256 cellar: :any, x86_64_linux: "493626d0a439d9ab149d0ed25f9d14e46992e21da04a457221092d1bed63c0fe"
+  end
+
   depends_on "rust" => :build
   depends_on "openssl@3"
   depends_on "python@3.13"
