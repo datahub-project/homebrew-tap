@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/0a/a1/218de19625b9d328479455bd0fe79128bf3d12105304ba60508adad7bd5c/acryl_datahub-1.6.0.6.tar.gz"
-  sha256 "767452b83d918fd2acb1062a1ec7a75910259f54a03c0133861cc39991fdd2f9"
+  url "https://files.pythonhosted.org/packages/cb/2e/8b2c7a44f1c13ec5e08d9e2e506a7b2970192ac5d05f072026d3fd4a327d/acryl_datahub-1.6.0.8.tar.gz"
+  sha256 "63996d2416b13a7195dd8892e095530774ad3f381ee098d024355509c3ab2621"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.6"
-    sha256 cellar: :any, arm64_sonoma: "775c02634464f85ed906ae522892b043c9d88bf0ee0ee74775ed13a6d204169c"
-    sha256 cellar: :any, x86_64_linux: "493626d0a439d9ab149d0ed25f9d14e46992e21da04a457221092d1bed63c0fe"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.8"
+    sha256 cellar: :any, arm64_sonoma: "08c0722be48485295b6fc9535ff3bb6922eeb9ea11b3097440869d17c2c815de"
+    sha256 cellar: :any, x86_64_linux: "56d2ea643fc63c0d9966d8d3ff7288eda65902f7cd031f8ae2415b2f3ba182ca"
   end
+
 
   depends_on "rust" => :build
   depends_on "openssl@3"
