@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/cb/2e/8b2c7a44f1c13ec5e08d9e2e506a7b2970192ac5d05f072026d3fd4a327d/acryl_datahub-1.6.0.8.tar.gz"
-  sha256 "63996d2416b13a7195dd8892e095530774ad3f381ee098d024355509c3ab2621"
+  url "https://files.pythonhosted.org/packages/c9/d8/75cc43d7f84ba728b9a2566cc61b6686566ccbc714dbc56056a88dc34b62/acryl_datahub-1.6.0.9.tar.gz"
+  sha256 "795fd16c2f5d59b64f2462d74fdb53f1553b89ed281cd545cb8c2c15a9e05c20"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.8"
-    sha256 cellar: :any, arm64_sonoma: "08c0722be48485295b6fc9535ff3bb6922eeb9ea11b3097440869d17c2c815de"
-    sha256 cellar: :any, x86_64_linux: "56d2ea643fc63c0d9966d8d3ff7288eda65902f7cd031f8ae2415b2f3ba182ca"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.9"
+    sha256 cellar: :any, arm64_sonoma: "2fe92624dbe1f77e8ce412d8c227d94f301f8d00ef1c44a29be81cef5d0587d0"
+    sha256 cellar: :any, x86_64_linux: "1ceae309f16aa025a22c970e7a64668d994c06433da14c846546e5a3209d81fb"
   end
+
 
 
   depends_on "rust" => :build
@@ -257,8 +258,8 @@ class Datahub < Formula
   end
 
   resource "rpds-py" do
-    url "https://files.pythonhosted.org/packages/2e/43/25a8dcd3feedd735039a8f0b5b7e3b118232b5eae288c4fd9ab200d41094/rpds_py-2026.5.1.tar.gz"
-    sha256 "07b24fea40541e28570e5b795a4a38fbdcd12550c06bd0748005ecc8116ca256"
+    url "https://files.pythonhosted.org/packages/aa/2a/9618a122aeb2a169a28b03889a2995fe297588964333d4a7d67bdf46e147/rpds_py-2026.6.3.tar.gz"
+    sha256 "1cebd1337c242e4ec2293e541f712b2da849b29f48f0c293684b71c0632625d4"
   end
 
   resource "ruamel-yaml" do
@@ -267,8 +268,8 @@ class Datahub < Formula
   end
 
   resource "sentry-sdk" do
-    url "https://files.pythonhosted.org/packages/ba/c8/b3c970a5b186722d276cd40a05b3254e03bccc0208560aff20f612e018e8/sentry_sdk-2.63.0.tar.gz"
-    sha256 "2a1502bf864769275dbc8c2c9fc7a0f7f5e18358180b615d262d13a31ffba216"
+    url "https://files.pythonhosted.org/packages/60/31/b7341f156a5f6f36f0b4845d6f1c28a2ae4799171dba7007f3a1e9b234b4/sentry_sdk-2.64.0.tar.gz"
+    sha256 "68be2c29e14ae310f8a39e1a79916b6d85c6cb41dcce789d14ff05fe293e4c55"
   end
 
   resource "setuptools" do
