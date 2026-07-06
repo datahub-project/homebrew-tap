@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/c9/d8/75cc43d7f84ba728b9a2566cc61b6686566ccbc714dbc56056a88dc34b62/acryl_datahub-1.6.0.9.tar.gz"
-  sha256 "795fd16c2f5d59b64f2462d74fdb53f1553b89ed281cd545cb8c2c15a9e05c20"
+  url "https://files.pythonhosted.org/packages/59/54/015682ef2f08f1258aa632bae2fa7ce7f28023ca3198e398aeabf93b62ba/acryl_datahub-1.6.0.10.tar.gz"
+  sha256 "227fad5134d8822317b2e11e7d827de5bc43b03a1b4f844040cc5673f4b8a9d1"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.9"
-    sha256 cellar: :any, arm64_sonoma: "2fe92624dbe1f77e8ce412d8c227d94f301f8d00ef1c44a29be81cef5d0587d0"
-    sha256 cellar: :any, x86_64_linux: "1ceae309f16aa025a22c970e7a64668d994c06433da14c846546e5a3209d81fb"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.10"
+    sha256 cellar: :any, arm64_sonoma: "fc2efce69edad2011ae749473ba406fa93ed3e5d08b33070b6dfd6ffcf92d585"
+    sha256 cellar: :any, x86_64_linux: "807a4e46703e60a9171d262c4d70833e61da2607d99dfdfc40f65ab0a9b8391d"
   end
+
 
 
 
@@ -28,8 +29,8 @@ class Datahub < Formula
   depends_on "python@3.13"
 
   resource "aiohappyeyeballs" do
-    url "https://files.pythonhosted.org/packages/33/c6/61a2d7b7572279226bb2e7f61d7a19ca7c90da0329c93fa0d560cbf288d8/aiohappyeyeballs-2.6.2.tar.gz"
-    sha256 "e202810ee718bd01fc6ef49e8ea53d023d5cb6b581076d7925aa499fa55dbe64"
+    url "https://files.pythonhosted.org/packages/ce/f4/eec0465c2f67b2664688d0240b3212d5196fd89e741df67ddb81f8d35658/aiohappyeyeballs-2.7.1.tar.gz"
+    sha256 "065665c041c42a5938ed220bdcd7230f22527fbec085e1853d2402c8a3615d9d"
   end
 
   resource "aiohttp" do
@@ -233,8 +234,8 @@ class Datahub < Formula
   end
 
   resource "python-utils" do
-    url "https://files.pythonhosted.org/packages/13/4c/ef8b7b1046d65c1f18ca31e5235c7d6627ca2b3f389ab1d44a74d22f5cc9/python_utils-3.9.1.tar.gz"
-    sha256 "eb574b4292415eb230f094cbf50ab5ef36e3579b8f09e9f2ba74af70891449a0"
+    url "https://files.pythonhosted.org/packages/2e/4f/ffd054f649cb9deca624a61d83fd17ce5b6247ba6c41a5881b0c639573d7/python_utils-4.0.0.tar.gz"
+    sha256 "51d84b297d9877205a76e65f970e3275d1aa9c1cf3d508af2c459247eb4fe701"
   end
 
   resource "pyyaml" do
@@ -293,8 +294,8 @@ class Datahub < Formula
   end
 
   resource "typing-extensions" do
-    url "https://files.pythonhosted.org/packages/72/94/1a15dd82efb362ac84269196e94cf00f187f7ed21c242792a923cdb1c61f/typing_extensions-4.15.0.tar.gz"
-    sha256 "0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466"
+    url "https://files.pythonhosted.org/packages/f6/cc/6253133b5bb138fc3306cebfbda2c520f545d36b5be2c7255cc528bb45d6/typing_extensions-4.16.0.tar.gz"
+    sha256 "dc983d19a509c94dba722ee6abd33940f7c05a89e243c47e907eb4db6f1a43e5"
   end
 
   resource "typing-inspect" do
