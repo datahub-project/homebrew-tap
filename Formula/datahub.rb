@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/59/54/015682ef2f08f1258aa632bae2fa7ce7f28023ca3198e398aeabf93b62ba/acryl_datahub-1.6.0.10.tar.gz"
-  sha256 "227fad5134d8822317b2e11e7d827de5bc43b03a1b4f844040cc5673f4b8a9d1"
+  url "https://files.pythonhosted.org/packages/f4/9f/e550666b27f671d49d1d4c004497abf1d0417c91c85dcd141fba967d2514/acryl_datahub-1.6.0.13.tar.gz"
+  sha256 "d460fb1cc8541ba3c62baae67d3b349ebac1c6a5669b088973f5274ae22a6fa8"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.10"
-    sha256 cellar: :any, arm64_sonoma: "fc2efce69edad2011ae749473ba406fa93ed3e5d08b33070b6dfd6ffcf92d585"
-    sha256 cellar: :any, x86_64_linux: "807a4e46703e60a9171d262c4d70833e61da2607d99dfdfc40f65ab0a9b8391d"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.13"
+    sha256 cellar: :any, arm64_sonoma: "c3be49e4132ec2e092c8e347f6a17a810af93076c015ce1477115ffc56123888"
+    sha256 cellar: :any, x86_64_linux: "24ff6300d550d0bfbb95422225eea29508ac68591205290d708d02a68063506e"
   end
+
 
 
 
@@ -84,8 +85,8 @@ class Datahub < Formula
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/e7/a1/67fe25fac3c7642725500a3f6cfe5821ad557c3abb11c9d20d12c7008d3e/charset_normalizer-3.4.7.tar.gz"
-    sha256 "ae89db9e5f98a11a4bf50407d4363e7b09b31e55bc117b4f7d80aab97ba009e5"
+    url "https://files.pythonhosted.org/packages/bd/2a/23f34ec9d04624958e137efdc394888716353190e75f25dd22c7a2c7a8aa/charset_normalizer-3.4.9.tar.gz"
+    sha256 "673611bbd43f0810bec0b0f028ddeaaa501190339cac411f347ac76917c3ae7b"
   end
 
   resource "click" do
@@ -114,8 +115,8 @@ class Datahub < Formula
   end
 
   resource "docker" do
-    url "https://files.pythonhosted.org/packages/91/9b/4a2ea29aeba62471211598dac5d96825bb49348fa07e906ea930394a83ce/docker-7.1.0.tar.gz"
-    sha256 "ad8c70e6e3f8926cb8a92619b832b4ea5299e2831c14284663184e200546fa6c"
+    url "https://files.pythonhosted.org/packages/88/7f/731ff914b0255d3d065f45fd4e626d4b8c95dbcbaada049f337a6ac16410/docker-7.2.0.tar.gz"
+    sha256 "cebb93773d334f778e023a7ee352a8d6e13ab1bd3b863a4d4a59dec897df43ac"
   end
 
   resource "expandvars" do
@@ -154,8 +155,8 @@ class Datahub < Formula
   end
 
   resource "ijson" do
-    url "https://files.pythonhosted.org/packages/f4/57/60d1a6a512f2f0508d0bc8b4f1cc5616fd3196619b66bd6a01f9155a1292/ijson-3.5.0.tar.gz"
-    sha256 "94688760720e3f5212731b3cb8d30267f9a045fb38fb3870254e7b9504246f31"
+    url "https://files.pythonhosted.org/packages/3a/06/b31f040a8764336a11152e474a7abcb3782fedb0d1cdf78f442b82878c56/ijson-3.5.1.tar.gz"
+    sha256 "af40bd1a85f55db0b8b30715c858761306bd92d5590148636f75c3309e6e76bd"
   end
 
   resource "json-logic" do
