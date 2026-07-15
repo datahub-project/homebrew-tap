@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/f4/9f/e550666b27f671d49d1d4c004497abf1d0417c91c85dcd141fba967d2514/acryl_datahub-1.6.0.13.tar.gz"
-  sha256 "d460fb1cc8541ba3c62baae67d3b349ebac1c6a5669b088973f5274ae22a6fa8"
+  url "https://files.pythonhosted.org/packages/78/c7/a2d3eb7d1a2e4538b69af3133c3e11f9ebbc697bdfb5d9076ba00d1ff002/acryl_datahub-1.6.0.14.tar.gz"
+  sha256 "500cc554ecd540099e14cc8e69a2ea3e7d8896a4bcfc8f81eaa93b6b7b70334a"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.13"
-    sha256 cellar: :any, arm64_sonoma: "c3be49e4132ec2e092c8e347f6a17a810af93076c015ce1477115ffc56123888"
-    sha256 cellar: :any, x86_64_linux: "24ff6300d550d0bfbb95422225eea29508ac68591205290d708d02a68063506e"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.14"
+    sha256 cellar: :any, arm64_sonoma: "d57687ab74de7cdecdb5ecec92365fa34ca48d762ca0e2c589d8f26ee38dbca2"
+    sha256 cellar: :any, x86_64_linux: "dd22188323c9c52453c6797e767a6f939f9c0f1905045de8b0d3d4e4b33b2db5"
   end
+
 
 
 
@@ -50,13 +51,13 @@ class Datahub < Formula
   end
 
   resource "anyio" do
-    url "https://files.pythonhosted.org/packages/3b/72/5562aabb8dd7181e8e860622a38bea08d17842b99ecd4c91f84ac95251b0/anyio-4.14.1.tar.gz"
-    sha256 "8d648a3544c1a700e3ff78615cd679e4c5c3f149904287e73687b2596963629e"
+    url "https://files.pythonhosted.org/packages/61/cc/a381afa6efea9f496eff839d4a6a1aed3bfafc7b3ab4b0d1b243a12573dd/anyio-4.14.2.tar.gz"
+    sha256 "cfa139f3ed1a23ee8f88a145ddb5ac7605b8bbfd8592baacd7ce3d8bb4313c7f"
   end
 
   resource "asgiref" do
-    url "https://files.pythonhosted.org/packages/63/40/f03da1264ae8f7cfdbf9146542e5e7e8100a4c66ab48e791df9a03d3f6c0/asgiref-3.11.1.tar.gz"
-    sha256 "5f184dc43b7e763efe848065441eac62229c9f7b0475f41f80e207a114eda4ce"
+    url "https://files.pythonhosted.org/packages/73/9b/e1cda73c1b8050ec258f94b426f769f7f1b0835bd9644cb6d561e2e320ca/asgiref-3.12.0.tar.gz"
+    sha256 "37ef86a30c3549f1a469c78c4521a63b8c31c17ee42cf792a2b054af81e23c79"
   end
 
   resource "attrs" do
@@ -180,8 +181,8 @@ class Datahub < Formula
   end
 
   resource "mixpanel" do
-    url "https://files.pythonhosted.org/packages/c3/29/551635e55b3ffe46c952ac18b3d98bb75959f4426aec1bf0d56f05a2c25f/mixpanel-5.1.0.tar.gz"
-    sha256 "aa7d8f3b49d3e215fcec29f706dfd20cb821257c8f1a923009b62ac23fad357a"
+    url "https://files.pythonhosted.org/packages/28/de/5b72fe76f1f8d77c641f316087d733b46cd627f75250c9b718518a5ddeba/mixpanel-5.2.0.tar.gz"
+    sha256 "6ee99415b4e3e4b2aa6d73bf5df134cd5d60a72b5577c557dd2537c92085ca32"
   end
 
   resource "multidict" do
@@ -215,13 +216,13 @@ class Datahub < Formula
   end
 
   resource "pydantic" do
-    url "https://files.pythonhosted.org/packages/18/a5/b60d21ac674192f8ab0ba4e9fd860690f9b4a6e51ca5df118733b487d8d6/pydantic-2.13.4.tar.gz"
-    sha256 "c40756b57adaa8b1efeeced5c196f3f3b7c435f90e84ea7f443901bec8099ef6"
+    url "https://files.pythonhosted.org/packages/ae/54/ecab642b3bed45f7d5f59b38443dcb36ef50f85af192e6ece103dbfe9587/pydantic-2.11.10.tar.gz"
+    sha256 "dc280f0982fbda6c38fada4e476dc0a4f3aeaf9c6ad4c28df68a666ec3c61423"
   end
 
   resource "pydantic-core" do
-    url "https://files.pythonhosted.org/packages/9d/56/921726b776ace8d8f5db44c4ef961006580d91dc52b803c489fafd1aa249/pydantic_core-2.46.4.tar.gz"
-    sha256 "62f875393d7f270851f20523dd2e29f082bcc82292d66db2b64ea71f64b6e1c1"
+    url "https://files.pythonhosted.org/packages/ad/88/5f2260bdfae97aabf98f1778d43f69574390ad787afb646292a638c923d4/pydantic_core-2.33.2.tar.gz"
+    sha256 "7cb8bc3605c29176e1b105350d2e6474142d7c1bd1d9327c4a9bdb46bf827acc"
   end
 
   resource "python-dateutil" do
@@ -270,8 +271,8 @@ class Datahub < Formula
   end
 
   resource "sentry-sdk" do
-    url "https://files.pythonhosted.org/packages/60/31/b7341f156a5f6f36f0b4845d6f1c28a2ae4799171dba7007f3a1e9b234b4/sentry_sdk-2.64.0.tar.gz"
-    sha256 "68be2c29e14ae310f8a39e1a79916b6d85c6cb41dcce789d14ff05fe293e4c55"
+    url "https://files.pythonhosted.org/packages/f1/1f/ed17a390348156ca99fe622b97cd7d2f1969b5f49df89084b0f28e7953e9/sentry_sdk-2.65.0.tar.gz"
+    sha256 "c94dc945d54bad49d4f20448b1e6b217ca2f92f46d05c3e83d41764af685c3d1"
   end
 
   resource "setuptools" do
