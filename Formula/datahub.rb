@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/78/c7/a2d3eb7d1a2e4538b69af3133c3e11f9ebbc697bdfb5d9076ba00d1ff002/acryl_datahub-1.6.0.14.tar.gz"
-  sha256 "500cc554ecd540099e14cc8e69a2ea3e7d8896a4bcfc8f81eaa93b6b7b70334a"
+  url "https://files.pythonhosted.org/packages/d8/2e/3c5e1c91ba43a1dafe35efcc68c170ed442dbc92f640730606b9cc58a5c6/acryl_datahub-1.6.0.15.tar.gz"
+  sha256 "fa81f5ec4bba9b54072c1bce60013265819106d72d45b145fc942ba0534802a9"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.14"
-    sha256 cellar: :any, arm64_sonoma: "d57687ab74de7cdecdb5ecec92365fa34ca48d762ca0e2c589d8f26ee38dbca2"
-    sha256 cellar: :any, x86_64_linux: "dd22188323c9c52453c6797e767a6f939f9c0f1905045de8b0d3d4e4b33b2db5"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.15"
+    sha256 cellar: :any, arm64_sonoma: "6a2f71e9a54dbc6aedb0962596d4a1946c10c8714e46cb0aee653a58c92dab61"
+    sha256 cellar: :any, x86_64_linux: "3ed4ba05d857e17818fa4a1952d7661dbee026974fd51ba186e48167e332ac01"
   end
+
 
 
 
@@ -56,8 +57,8 @@ class Datahub < Formula
   end
 
   resource "asgiref" do
-    url "https://files.pythonhosted.org/packages/73/9b/e1cda73c1b8050ec258f94b426f769f7f1b0835bd9644cb6d561e2e320ca/asgiref-3.12.0.tar.gz"
-    sha256 "37ef86a30c3549f1a469c78c4521a63b8c31c17ee42cf792a2b054af81e23c79"
+    url "https://files.pythonhosted.org/packages/e6/26/3b59f2bdae5f640389becb1f673cded775287f5fc4f816309d9ca9a3f93d/asgiref-3.12.1.tar.gz"
+    sha256 "59dcb51c272ad209d59bed5708a64a333083e86017d7fcdd67498eeab7784340"
   end
 
   resource "attrs" do
@@ -271,8 +272,8 @@ class Datahub < Formula
   end
 
   resource "sentry-sdk" do
-    url "https://files.pythonhosted.org/packages/f1/1f/ed17a390348156ca99fe622b97cd7d2f1969b5f49df89084b0f28e7953e9/sentry_sdk-2.65.0.tar.gz"
-    sha256 "c94dc945d54bad49d4f20448b1e6b217ca2f92f46d05c3e83d41764af685c3d1"
+    url "https://files.pythonhosted.org/packages/48/ff/670abe04c5072719b5060ed93851d0d69525d60f8f2c5810f8becd58f9c1/sentry_sdk-2.66.0.tar.gz"
+    sha256 "9727d35aa83c56cd53294676fe65b96296a334c9ce107fa2142bd70f47acb265"
   end
 
   resource "setuptools" do
