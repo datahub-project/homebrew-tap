@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/d8/2e/3c5e1c91ba43a1dafe35efcc68c170ed442dbc92f640730606b9cc58a5c6/acryl_datahub-1.6.0.15.tar.gz"
-  sha256 "fa81f5ec4bba9b54072c1bce60013265819106d72d45b145fc942ba0534802a9"
+  url "https://files.pythonhosted.org/packages/33/ff/81a9c70418873b981ca8e173d0bcc95420f7cd7be73aea3a260f07aa8251/acryl_datahub-1.6.0.16.tar.gz"
+  sha256 "ce2c6b2651edc46978e14886c41ce4f1fca99980dfae565c3377ce88c2f67402"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.15"
-    sha256 cellar: :any, arm64_sonoma: "6a2f71e9a54dbc6aedb0962596d4a1946c10c8714e46cb0aee653a58c92dab61"
-    sha256 cellar: :any, x86_64_linux: "3ed4ba05d857e17818fa4a1952d7661dbee026974fd51ba186e48167e332ac01"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.16"
+    sha256 cellar: :any, arm64_sonoma: "d24ca9ab98ef72a96ef99f1f56f4f08dbb79ee1e7e8b514ff505d9b55ad73ced"
+    sha256 cellar: :any, x86_64_linux: "accfb104c714b9ce29a61004487f46c07f1e60af37ce45ae6df5e096da4bd7db"
   end
+
 
 
 
@@ -37,8 +38,8 @@ class Datahub < Formula
   end
 
   resource "aiohttp" do
-    url "https://files.pythonhosted.org/packages/82/78/8ea7308cac6934de8c74a14f3d5f65d1c89287426688be79538d0e5c013d/aiohttp-3.14.1.tar.gz"
-    sha256 "307f2cff90a764d329e77040603fa032db89c5c24fdad50c4c15334cba744035"
+    url "https://files.pythonhosted.org/packages/58/d9/22ce5786ac0c1653ae8b6c23bded02c1686d11f0dbb45b31ce128e0df985/aiohttp-3.14.3.tar.gz"
+    sha256 "9491196535a88924a60afd5b5f434b5b203b6cc616250878dbdb223a8f7844bc"
   end
 
   resource "aiosignal" do
@@ -47,8 +48,8 @@ class Datahub < Formula
   end
 
   resource "annotated-types" do
-    url "https://files.pythonhosted.org/packages/ee/67/531ea369ba64dcff5ec9c3402f9f51bf748cec26dde048a2f973a4eea7f5/annotated_types-0.7.0.tar.gz"
-    sha256 "aff07c09a53a08bc8cfccb9c85b05f1aa9a2a6f23728d790723543408344ce89"
+    url "https://files.pythonhosted.org/packages/5f/56/a8120250d128bed162cd73c76d45f6ef9991f3e068f62a8ee060afa3104a/annotated_types-0.8.0.tar.gz"
+    sha256 "13b2beaad985e05e2d6407ee4c4f35590b11f8d693a258a561055cac8f64cab7"
   end
 
   resource "anyio" do
@@ -82,8 +83,8 @@ class Datahub < Formula
   end
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/c9/c7/424b75da314c1045981bd9777432fad05a9e0c69daa4ed7e308bbaffe405/certifi-2026.6.17.tar.gz"
-    sha256 "024c88eeec92ca068db80f02b8b07c9cef7b9fe261d1d535abfd5abd6f6af432"
+    url "https://files.pythonhosted.org/packages/a3/c2/24167ea9858356b47a87a50d39908bfdb72ceeefe0041586e704e5376b3a/certifi-2026.7.22.tar.gz"
+    sha256 "741e2c3b351ddf169a738da9f2c048608ff7f2c5cc02f1ebc6b118bb090d5d55"
   end
 
   resource "charset-normalizer" do
@@ -272,8 +273,8 @@ class Datahub < Formula
   end
 
   resource "sentry-sdk" do
-    url "https://files.pythonhosted.org/packages/48/ff/670abe04c5072719b5060ed93851d0d69525d60f8f2c5810f8becd58f9c1/sentry_sdk-2.66.0.tar.gz"
-    sha256 "9727d35aa83c56cd53294676fe65b96296a334c9ce107fa2142bd70f47acb265"
+    url "https://files.pythonhosted.org/packages/7f/6f/d59cad0889d15fde85254cf58e701484de3f3f0406003b3197746910b19b/sentry_sdk-2.66.1.tar.gz"
+    sha256 "f882fb08710c5f8bfc603aafa3e901b384009a19cc3f76a572b863392ee81cdc"
   end
 
   resource "setuptools" do
@@ -322,8 +323,8 @@ class Datahub < Formula
   end
 
   resource "yarl" do
-    url "https://files.pythonhosted.org/packages/79/12/1e8f37460ea0f7eb59c221fdaf0ed75e7ac43e97f8093b9c6f411df50a78/yarl-1.24.2.tar.gz"
-    sha256 "9ac374123c6fd7abf64d1fec93962b0bd4ee2c19751755a762a72dd96c0378f8"
+    url "https://files.pythonhosted.org/packages/31/33/ebe9e3d1f86c7a0b51094c0a146392045ca1631d2664889539dec8088a33/yarl-1.24.5.tar.gz"
+    sha256 "e81b83143bee16329c23db3c1b2d82b29892fcbcb849186d2f6e98a5abe9a57f"
   end
 
   def install
