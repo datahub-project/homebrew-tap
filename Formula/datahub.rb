@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/33/ff/81a9c70418873b981ca8e173d0bcc95420f7cd7be73aea3a260f07aa8251/acryl_datahub-1.6.0.16.tar.gz"
-  sha256 "ce2c6b2651edc46978e14886c41ce4f1fca99980dfae565c3377ce88c2f67402"
+  url "https://files.pythonhosted.org/packages/21/4b/69cc5d1772586bb2773cc1602272af23f9d01be9ffc70d92880b4670bf3b/acryl_datahub-1.6.0.17.tar.gz"
+  sha256 "1ccbe937af700a6386ad850981794027009e55d6a0fb6586d6b24b380874aa6a"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.16"
-    sha256 cellar: :any, arm64_sonoma: "d24ca9ab98ef72a96ef99f1f56f4f08dbb79ee1e7e8b514ff505d9b55ad73ced"
-    sha256 cellar: :any, x86_64_linux: "accfb104c714b9ce29a61004487f46c07f1e60af37ce45ae6df5e096da4bd7db"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.6.0.17"
+    sha256 cellar: :any, arm64_sonoma: "f14466d8c8e6ddab418be157429f26bc751c7ff9503c8c940792790a9dd3dede"
+    sha256 cellar: :any, x86_64_linux: "2c76be0cd9ca96033e12d992d6506805e93543fde7dd3d7ddd48263e8d189850"
   end
+
 
 
 
@@ -183,8 +184,8 @@ class Datahub < Formula
   end
 
   resource "mixpanel" do
-    url "https://files.pythonhosted.org/packages/28/de/5b72fe76f1f8d77c641f316087d733b46cd627f75250c9b718518a5ddeba/mixpanel-5.2.0.tar.gz"
-    sha256 "6ee99415b4e3e4b2aa6d73bf5df134cd5d60a72b5577c557dd2537c92085ca32"
+    url "https://files.pythonhosted.org/packages/f2/d7/eef33647836ef77fc38e6b1c69d30de2e95552f4a2319eb2a8a4f43957dd/mixpanel-5.3.0.tar.gz"
+    sha256 "f08baa1ddb9357a833ceae168c25f82718e011c6b883d0898d080d141a26b793"
   end
 
   resource "multidict" do
@@ -318,8 +319,8 @@ class Datahub < Formula
   end
 
   resource "wrapt" do
-    url "https://files.pythonhosted.org/packages/fe/a4/282c8e64300a59fc834518a54bf0afabb4ff9218b5fa76958b450459a844/wrapt-2.2.2.tar.gz"
-    sha256 "0788e321027c999bf221b667bd4a54aaefd1a36283749a860ac3eb77daed0302"
+    url "https://files.pythonhosted.org/packages/2b/b0/c1f5a970721f06b85c0cd5142e0ff8fe067708abd779b0c4f4be7d61d09f/wrapt-2.3.0.tar.gz"
+    sha256 "681a2d0eefd721998f90642762b8e75c2159ec531b20ad5e437245ea7b06a107"
   end
 
   resource "yarl" do
