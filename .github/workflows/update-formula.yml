@@ -43,12 +43,25 @@ jobs:
           latest=$(curl -fsS https://pypi.org/pypi/acryl-datahub/json | jq -r .info.version)
           current=$(grep -oE 'acryl_datahub-[0-9.]+\.tar\.gz' Formula/datahub.rb | head -1 | sed -E 's/.*-([0-9.]+)\.tar\.gz/\1/')
           echo "latest=$latest" >> "$GITHUB_OUTPUT"
-          if [ "$latest" != "$current" ] || [ "${{ inputs.force }}" = "true" ]; then
-            echo "bump=true"  >> "$GITHUB_OUTPUT"
+
+          # `brew update-python-resources` resolves deps via a pip dry-run that
+          # passes `--uploaded-prior-to=P1D`, a Homebrew supply-chain guard
+          # that refuses to resolve any release uploaded less than 24h ago.
+          # Bumping to a release younger than that is guaranteed to fail in
+          # the generate job, so gate the trigger on release age here (with a
+          # 1h buffer past the 24h pip cutoff for clock/timing skew) instead
+          # of failing loudly every hour until it ages past the cutoff.
+          upload_time=$(curl -fsS "https://pypi.org/pypi/acryl-datahub/${latest}/json" | jq -r '[.urls[].upload_time_iso_8601] | min')
+          age_hours=$(( ($(date -u +%s) - $(date -u -d "$upload_time" +%s)) / 3600 ))
+
+          if [ "${{ inputs.force }}" = "true" ]; then
+            echo "bump=true" >> "$GITHUB_OUTPUT"
+          elif [ "$latest" != "$current" ] && [ "$age_hours" -ge 25 ]; then
+            echo "bump=true" >> "$GITHUB_OUTPUT"
           else
             echo "bump=false" >> "$GITHUB_OUTPUT"
           fi
-          echo "PyPI: $latest | Formula: $current | force: ${{ inputs.force }}"
+          echo "PyPI: $latest (uploaded $upload_time, ${age_hours}h ago) | Formula: $current | force: ${{ inputs.force }}"
 
   # Produce the bumped formula once and share it; both bottle builds and the
   # publish step start from this identical file.
