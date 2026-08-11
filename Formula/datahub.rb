@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/a4/a2/e992f5aedede6591c2f3f9ef34ce9d52b5f0d771e0aca8a9c1eb9d364bde/acryl_datahub-1.7.0.tar.gz"
-  sha256 "331276285f7bce9cff25419adc7b88dc2050fae1b94c339a92c62040174af177"
+  url "https://files.pythonhosted.org/packages/33/d8/a3674d616025d415732c8ebdd1930c275f1d7860fd17a30077c15a8f4729/acryl_datahub-1.7.0.2.tar.gz"
+  sha256 "620cb5306087a9c2446ac879e1c6d45fe9004d531ed8319ddb4980a61883fc22"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0"
-    sha256 cellar: :any, arm64_sonoma: "dff378610697873f7744481215a2fbfe6c1df161c530a51623a4b8a0edafe99c"
-    sha256 cellar: :any, x86_64_linux: "23d5513b67de64e45cdf873530c7f2eedbd04d84559928ef36461ec28680bf06"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.2"
+    sha256 cellar: :any, arm64_sonoma: "c1fd3b2eed76b1a28f2f5be2cfabe53d323165a2538d4179b17c6558f73bb23d"
+    sha256 cellar: :any, x86_64_linux: "52ec1b29e8a916f139a663cebef5d8a8bc631152a01d54a7562dfa85ff934ec4"
   end
+
 
 
 
@@ -310,8 +311,8 @@ class Datahub < Formula
   end
 
   resource "typing-inspection" do
-    url "https://files.pythonhosted.org/packages/55/e3/70399cb7dd41c10ac53367ae42139cf4b1ca5f36bb3dc6c9d33acdb43655/typing_inspection-0.4.2.tar.gz"
-    sha256 "ba561c48a67c5958007083d386c3295464928b01faa735ab8547c5692e87f464"
+    url "https://files.pythonhosted.org/packages/6d/bc/4eae18cd40c65798a16267572ba346c11f599d44b01603dbd843342042bc/typing_inspection-0.4.3.tar.gz"
+    sha256 "c5f9ec1530b5c1e2c9bc34a84d9a3466ed1b2f3f2fa9f901368d9c5596210e4d"
   end
 
   resource "urllib3" do
