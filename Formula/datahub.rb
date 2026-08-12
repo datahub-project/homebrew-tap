@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/33/d8/a3674d616025d415732c8ebdd1930c275f1d7860fd17a30077c15a8f4729/acryl_datahub-1.7.0.2.tar.gz"
-  sha256 "620cb5306087a9c2446ac879e1c6d45fe9004d531ed8319ddb4980a61883fc22"
+  url "https://files.pythonhosted.org/packages/65/44/662b9ccaf296ca1ff8faf36d883e6f75573fde58390a9179cda2c49dc38b/acryl_datahub-1.7.0.3.tar.gz"
+  sha256 "ba5793a2551765635334b365f2a1ccee392b92c6f357399a3b0438b206303428"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.2"
-    sha256 cellar: :any, arm64_sonoma: "c1fd3b2eed76b1a28f2f5be2cfabe53d323165a2538d4179b17c6558f73bb23d"
-    sha256 cellar: :any, x86_64_linux: "52ec1b29e8a916f139a663cebef5d8a8bc631152a01d54a7562dfa85ff934ec4"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.3"
+    sha256 cellar: :any, arm64_sonoma: "feef37b1fec82868e65120eb7a6f36c7ee7e152148bca4c3b0a210063af8680b"
+    sha256 cellar: :any, x86_64_linux: "63ba5a837c3c02f328e270512aeb6298d120212056eeb0b4be7b1fe35ed81870"
   end
+
 
 
 
@@ -276,8 +277,8 @@ class Datahub < Formula
   end
 
   resource "sentry-sdk" do
-    url "https://files.pythonhosted.org/packages/7f/6f/d59cad0889d15fde85254cf58e701484de3f3f0406003b3197746910b19b/sentry_sdk-2.66.1.tar.gz"
-    sha256 "f882fb08710c5f8bfc603aafa3e901b384009a19cc3f76a572b863392ee81cdc"
+    url "https://files.pythonhosted.org/packages/ad/8a/b2eec40df8a67bf073e244d29001d04ee365d163bc4f15efdfce35f53090/sentry_sdk-2.67.1.tar.gz"
+    sha256 "f263d8c9aa4137750640de8fb0ed5404df6bb564e20e4b59cb16a6eeba18d4ed"
   end
 
   resource "setuptools" do
