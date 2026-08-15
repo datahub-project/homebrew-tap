@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/65/44/662b9ccaf296ca1ff8faf36d883e6f75573fde58390a9179cda2c49dc38b/acryl_datahub-1.7.0.3.tar.gz"
-  sha256 "ba5793a2551765635334b365f2a1ccee392b92c6f357399a3b0438b206303428"
+  url "https://files.pythonhosted.org/packages/0d/1a/4c864ced467d65acafc97a37c11383b2fadf9865402edce6f6177f9c3a3e/acryl_datahub-1.7.0.4.tar.gz"
+  sha256 "563278d9f9f2959e832a77d953e95185e5610882a7e49424c1f049569dd0a9ca"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.3"
-    sha256 cellar: :any, arm64_sonoma: "feef37b1fec82868e65120eb7a6f36c7ee7e152148bca4c3b0a210063af8680b"
-    sha256 cellar: :any, x86_64_linux: "63ba5a837c3c02f328e270512aeb6298d120212056eeb0b4be7b1fe35ed81870"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.4"
+    sha256 cellar: :any, arm64_sonoma: "91ad518175007950bba1658e116958b65986abd347cae3a77165c604c89c2912"
+    sha256 cellar: :any, x86_64_linux: "5d7817aa96fbefcbb788438afaf44955294485c03863fa2e5f9cb8cdb1aef571"
   end
+
 
 
 
@@ -92,8 +93,8 @@ class Datahub < Formula
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/bd/2a/23f34ec9d04624958e137efdc394888716353190e75f25dd22c7a2c7a8aa/charset_normalizer-3.4.9.tar.gz"
-    sha256 "673611bbd43f0810bec0b0f028ddeaaa501190339cac411f347ac76917c3ae7b"
+    url "https://files.pythonhosted.org/packages/cb/31/4971872b3ed8715346231fb6eb4da8fcba65a4143c189db151ee28a2812b/charset_normalizer-3.5.0.tar.gz"
+    sha256 "49bd5feb59b0bf3cbf6ebcf4352e371c95b9da9bacd4449f8b64d0ad2c10a26e"
   end
 
   resource "click" do
@@ -207,8 +208,8 @@ class Datahub < Formula
   end
 
   resource "progressbar2" do
-    url "https://files.pythonhosted.org/packages/19/24/3587e795fc590611434e4bcb9fbe0c3dddb5754ce1a20edfd86c587c0004/progressbar2-4.5.0.tar.gz"
-    sha256 "6662cb624886ed31eb94daf61e27583b5144ebc7383a17bae076f8f4f59088fb"
+    url "https://files.pythonhosted.org/packages/0c/1e/5bd376abe32a392e74fffd82feb42ee1472d263bd358d628af20663d0346/progressbar2-4.6.0.tar.gz"
+    sha256 "fe48c8955a84428af77bff2642ba47041e1b8f7c867a5b7cc94f8bc255a8f0cf"
   end
 
   resource "propcache" do
@@ -277,8 +278,8 @@ class Datahub < Formula
   end
 
   resource "sentry-sdk" do
-    url "https://files.pythonhosted.org/packages/ad/8a/b2eec40df8a67bf073e244d29001d04ee365d163bc4f15efdfce35f53090/sentry_sdk-2.67.1.tar.gz"
-    sha256 "f263d8c9aa4137750640de8fb0ed5404df6bb564e20e4b59cb16a6eeba18d4ed"
+    url "https://files.pythonhosted.org/packages/5b/94/23b7dd072acb9628907bd3f4fbf61794a7b12a9db8f33c1276f70ae5ac92/sentry_sdk-2.68.0.tar.gz"
+    sha256 "648c58e9887311a03470a41539e24bdbbf64a30ca4f5336f7e3dcc87276400b3"
   end
 
   resource "setuptools" do
@@ -312,8 +313,8 @@ class Datahub < Formula
   end
 
   resource "typing-inspection" do
-    url "https://files.pythonhosted.org/packages/6d/bc/4eae18cd40c65798a16267572ba346c11f599d44b01603dbd843342042bc/typing_inspection-0.4.3.tar.gz"
-    sha256 "c5f9ec1530b5c1e2c9bc34a84d9a3466ed1b2f3f2fa9f901368d9c5596210e4d"
+    url "https://files.pythonhosted.org/packages/a3/26/b09b8010994eccc3c09092e6b34058f36a460eea2d4c3e8b910c695975a0/typing_inspection-0.4.4.tar.gz"
+    sha256 "547274fa6b0a561ccf549cc9524b999a578e737d015d8709d021f9d0d13bea47"
   end
 
   resource "urllib3" do
