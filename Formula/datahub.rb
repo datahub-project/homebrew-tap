@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/0d/1a/4c864ced467d65acafc97a37c11383b2fadf9865402edce6f6177f9c3a3e/acryl_datahub-1.7.0.4.tar.gz"
-  sha256 "563278d9f9f2959e832a77d953e95185e5610882a7e49424c1f049569dd0a9ca"
+  url "https://files.pythonhosted.org/packages/46/ad/8675b6d7637b572b19af79b6628527beb3f595900cab4edcfa21aab0a321/acryl_datahub-1.7.0.5.tar.gz"
+  sha256 "6cafeb162d571715f23f2523effa9a8d2f9d97c909606ce3f6e54a18b2977291"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.4"
-    sha256 cellar: :any, arm64_sonoma: "91ad518175007950bba1658e116958b65986abd347cae3a77165c604c89c2912"
-    sha256 cellar: :any, x86_64_linux: "5d7817aa96fbefcbb788438afaf44955294485c03863fa2e5f9cb8cdb1aef571"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.5"
+    sha256 cellar: :any, arm64_sonoma: "6ef52ceecf5c4d7f76d22e4b2b3a6676501ca13fe436e308a702ea6a62d8c548"
+    sha256 cellar: :any, x86_64_linux: "a284c4bb1ff930efacd0000b2c12d0cf01431e4521046d3ca40e7a681d3c0de8"
   end
+
 
 
 
@@ -73,8 +74,8 @@ class Datahub < Formula
   end
 
   resource "avro" do
-    url "https://files.pythonhosted.org/packages/60/00/af1eec633637e12d0945a97f05a429eed83ac45865af60cb453db4689d95/avro-1.12.1.tar.gz"
-    sha256 "c5b8dd2dd4c10816f0dc127cc29cfd43b5e405cf7e6840e89460a024bf3d098d"
+    url "https://files.pythonhosted.org/packages/5f/68/973b9c682aa2c3cf2b05fc4c961af11b9be1d9b46604f65aed23cd4fd1e6/avro-1.12.2.tar.gz"
+    sha256 "e900e7b59a4781f63d9e935e88f6ec50c4d60be3f4adf9c63b51ed39d578fe08"
   end
 
   resource "avro-gen3" do
@@ -93,8 +94,8 @@ class Datahub < Formula
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/cb/31/4971872b3ed8715346231fb6eb4da8fcba65a4143c189db151ee28a2812b/charset_normalizer-3.5.0.tar.gz"
-    sha256 "49bd5feb59b0bf3cbf6ebcf4352e371c95b9da9bacd4449f8b64d0ad2c10a26e"
+    url "https://files.pythonhosted.org/packages/e5/3f/143b048436775b0f76ac3eec145c019e8173ccc2885c8f20319b996d5e83/charset_normalizer-3.5.1.tar.gz"
+    sha256 "6117b84ea48435e5356dc737f5121485c30920ba43375fa7b434fd753df0eac3"
   end
 
   resource "click" do
@@ -158,8 +159,8 @@ class Datahub < Formula
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/cd/63/9496c57188a2ee585e0f1db071d75089a11e98aa86eb99d9d7618fc1edce/idna-3.18.tar.gz"
-    sha256 "ffb385a7e039654cef1ab9ef32c6fafe283c0c0467bba1d9029738ce4a14a848"
+    url "https://files.pythonhosted.org/packages/5f/f7/abb373e5757eaec4b922b92f97ec8d6d7e057cf06778247604fbc4e7c3f3/idna-3.19.tar.gz"
+    sha256 "5e0811a4383b21dc5838069f801c4fb62113b7447663d2530d2bd6e77b49bf15"
   end
 
   resource "ijson" do
@@ -185,6 +186,11 @@ class Datahub < Formula
   resource "jsonschema-specifications" do
     url "https://files.pythonhosted.org/packages/19/74/a633ee74eb36c44aa6d1095e7cc5569bebf04342ee146178e2d36600708b/jsonschema_specifications-2025.9.1.tar.gz"
     sha256 "b540987f239e745613c7a9176f3edb72b832a4ac465cf02712288397832b5e8d"
+  end
+
+  resource "loguru" do
+    url "https://files.pythonhosted.org/packages/3a/05/a1dae3dffd1116099471c643b8924f5aa6524411dc6c63fdae648c4f1aca/loguru-0.7.3.tar.gz"
+    sha256 "19480589e77d47b8d85b2c827ad95d49bf31b0dcde16593892eb51dd18706eb6"
   end
 
   resource "mixpanel" do
@@ -238,8 +244,8 @@ class Datahub < Formula
   end
 
   resource "python-json-logger" do
-    url "https://files.pythonhosted.org/packages/f7/ff/3cc9165fd44106973cd7ac9facb674a65ed853494592541d339bdc9a30eb/python_json_logger-4.1.0.tar.gz"
-    sha256 "b396b9e3ed782b09ff9d6e4f1683d46c83ad0d35d2e407c09a9ebbf038f88195"
+    url "https://files.pythonhosted.org/packages/21/25/5473e46b179f8e8b4ad3aeeb36773d1701b7770eaf5e5bc2025c7303b598/python_json_logger-4.2.0.tar.gz"
+    sha256 "e371ebe22ec01e289850102091a2b1f6fc9e655c7f1f5f29073936756c290afa"
   end
 
   resource "python-utils" do
