@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/46/ad/8675b6d7637b572b19af79b6628527beb3f595900cab4edcfa21aab0a321/acryl_datahub-1.7.0.5.tar.gz"
-  sha256 "6cafeb162d571715f23f2523effa9a8d2f9d97c909606ce3f6e54a18b2977291"
+  url "https://files.pythonhosted.org/packages/b0/10/8c34fb505929cb647cb7d798f96299517feabafa90ab541b8c51ef97a669/acryl_datahub-1.7.0.7.tar.gz"
+  sha256 "174ccdfadaec4eb72a3bab0199c236db8597b0cf6c1ad457187993addab8c7f9"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.5"
-    sha256 cellar: :any, arm64_sonoma: "6ef52ceecf5c4d7f76d22e4b2b3a6676501ca13fe436e308a702ea6a62d8c548"
-    sha256 cellar: :any, x86_64_linux: "a284c4bb1ff930efacd0000b2c12d0cf01431e4521046d3ca40e7a681d3c0de8"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.7"
+    sha256 cellar: :any, arm64_sonoma: "4165171be3874b365133742e0508bf39042d325a3039962253aa4033634de896"
+    sha256 cellar: :any, x86_64_linux: "ce3350bc26757a1b2e88f9b3ce5c2e4843194a2f47d9a0860afafd349c4331ec"
   end
+
 
 
 
@@ -99,8 +100,8 @@ class Datahub < Formula
   end
 
   resource "click" do
-    url "https://files.pythonhosted.org/packages/76/d4/81420972a676e8ffea40450d8c8c92943e7218a78fe9b64359836cc9876b/click-8.4.2.tar.gz"
-    sha256 "9a6cea6e60b17ebe0a44c5cc636d94f09bd66142c1cd7d8b4cd731c4917a15f6"
+    url "https://files.pythonhosted.org/packages/c7/0e/7fa0ef50764b67090eca4114772a2abf8b6148198475e54c660b97caeee6/click-8.5.0.tar.gz"
+    sha256 "ba0d2089de75ea0310e2dde03160e6ca10009947fb95a182f9b54021bb272e34"
   end
 
   resource "click-default-group" do
@@ -114,8 +115,8 @@ class Datahub < Formula
   end
 
   resource "cramjam" do
-    url "https://files.pythonhosted.org/packages/14/12/34bf6e840a79130dfd0da7badfb6f7810b8fcfd60e75b0539372667b41b6/cramjam-2.11.0.tar.gz"
-    sha256 "5c82500ed91605c2d9781380b378397012e25127e89d64f460fea6aeac4389b4"
+    url "https://files.pythonhosted.org/packages/2d/5f/e0fe688743fbd2b24e8662d276ae42ad1a2ea78d08850df8d706cce5013d/cramjam-2.12.1.tar.gz"
+    sha256 "75187b77a84b1f457f9555604775b70d04102af312224d03c873da59011bba31"
   end
 
   resource "deprecated" do
@@ -284,8 +285,8 @@ class Datahub < Formula
   end
 
   resource "sentry-sdk" do
-    url "https://files.pythonhosted.org/packages/5b/94/23b7dd072acb9628907bd3f4fbf61794a7b12a9db8f33c1276f70ae5ac92/sentry_sdk-2.68.0.tar.gz"
-    sha256 "648c58e9887311a03470a41539e24bdbbf64a30ca4f5336f7e3dcc87276400b3"
+    url "https://files.pythonhosted.org/packages/9a/e7/c504a4bd2d95df2e0ab73714a9161ff1cf6ff1486922685e5f46dfd9eba8/sentry_sdk-2.68.1.tar.gz"
+    sha256 "6a97895230b04bc35d4d8d2e51e3b9e21902dfb0086ccf1f131a80c15c7b997a"
   end
 
   resource "setuptools" do
