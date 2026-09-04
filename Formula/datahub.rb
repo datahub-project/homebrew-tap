@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/b0/10/8c34fb505929cb647cb7d798f96299517feabafa90ab541b8c51ef97a669/acryl_datahub-1.7.0.7.tar.gz"
-  sha256 "174ccdfadaec4eb72a3bab0199c236db8597b0cf6c1ad457187993addab8c7f9"
+  url "https://files.pythonhosted.org/packages/2a/f2/c683bf25f5f8c3ad399cc1c73983c744a6ced692607f9769944746b80af2/acryl_datahub-1.7.0.9.tar.gz"
+  sha256 "c00f50677e508ca2466e3fd1334c4ea48f3aeb656b16128952596c70dbc6f14c"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.7"
-    sha256 cellar: :any, arm64_sonoma: "4165171be3874b365133742e0508bf39042d325a3039962253aa4033634de896"
-    sha256 cellar: :any, x86_64_linux: "ce3350bc26757a1b2e88f9b3ce5c2e4843194a2f47d9a0860afafd349c4331ec"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.9"
+    sha256 cellar: :any, arm64_sonoma: "e3feada38f0130a9ca1f966252be6b30a85c29b273c210ecf7a5685fc8efd7e3"
+    sha256 cellar: :any, x86_64_linux: "f47708ecfafd41cbf4ccc502e509e1384245d0d283d1d2bba1f0f0c43428428c"
   end
+
 
 
 
@@ -60,8 +61,8 @@ class Datahub < Formula
   end
 
   resource "anyio" do
-    url "https://files.pythonhosted.org/packages/61/cc/a381afa6efea9f496eff839d4a6a1aed3bfafc7b3ab4b0d1b243a12573dd/anyio-4.14.2.tar.gz"
-    sha256 "cfa139f3ed1a23ee8f88a145ddb5ac7605b8bbfd8592baacd7ce3d8bb4313c7f"
+    url "https://files.pythonhosted.org/packages/ea/9a/c15a60547004a3f3cea20296c934f827ddd7bdba225a2e7e9fcb5ec48c80/anyio-4.15.0.tar.gz"
+    sha256 "b5c620ed540725e2579c31b17bb995b3bf02c9281c9cace04c7d186380bab85e"
   end
 
   resource "asgiref" do
@@ -195,8 +196,8 @@ class Datahub < Formula
   end
 
   resource "mixpanel" do
-    url "https://files.pythonhosted.org/packages/f2/d7/eef33647836ef77fc38e6b1c69d30de2e95552f4a2319eb2a8a4f43957dd/mixpanel-5.3.0.tar.gz"
-    sha256 "f08baa1ddb9357a833ceae168c25f82718e011c6b883d0898d080d141a26b793"
+    url "https://files.pythonhosted.org/packages/d6/cc/a4a5462b8529d30c44a1f39537049b5eff0134a0509a03a7e95acfe2790e/mixpanel-5.4.0.tar.gz"
+    sha256 "f80f10b689904831e81c326c50a4944c9260c1abda1bef6339ae346a6ca9a959"
   end
 
   resource "multidict" do
@@ -250,8 +251,8 @@ class Datahub < Formula
   end
 
   resource "python-utils" do
-    url "https://files.pythonhosted.org/packages/2e/4f/ffd054f649cb9deca624a61d83fd17ce5b6247ba6c41a5881b0c639573d7/python_utils-4.0.0.tar.gz"
-    sha256 "51d84b297d9877205a76e65f970e3275d1aa9c1cf3d508af2c459247eb4fe701"
+    url "https://files.pythonhosted.org/packages/5d/71/ec6665d4ce42ee5a59fffd31a4d5164f92da15ccb8c758dba13d2419ea53/python_utils-4.0.1.tar.gz"
+    sha256 "4e8e8ecaba3862f843a60c1982c99cda23b522f417006a807996a876c18beb8d"
   end
 
   resource "pyyaml" do
@@ -330,8 +331,8 @@ class Datahub < Formula
   end
 
   resource "wrapt" do
-    url "https://files.pythonhosted.org/packages/2b/b0/c1f5a970721f06b85c0cd5142e0ff8fe067708abd779b0c4f4be7d61d09f/wrapt-2.3.0.tar.gz"
-    sha256 "681a2d0eefd721998f90642762b8e75c2159ec531b20ad5e437245ea7b06a107"
+    url "https://files.pythonhosted.org/packages/65/ba/8dc25478ed234dacc7d83c671634f347d0bdfb65bf0502f41879cf2f15a9/wrapt-2.4.0.tar.gz"
+    sha256 "7082fc1f94b020ac275870c4af71b09cff22876fe6e9c4c0ad01ea21d217b288"
   end
 
   resource "yarl" do
