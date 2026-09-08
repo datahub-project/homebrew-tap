@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/2a/f2/c683bf25f5f8c3ad399cc1c73983c744a6ced692607f9769944746b80af2/acryl_datahub-1.7.0.9.tar.gz"
-  sha256 "c00f50677e508ca2466e3fd1334c4ea48f3aeb656b16128952596c70dbc6f14c"
+  url "https://files.pythonhosted.org/packages/a2/ca/86290add8bc81f6734d44f821d8d327daefe5edb9bbe5220f6c4e9721dc0/acryl_datahub-1.7.0.10.tar.gz"
+  sha256 "b94e9cc78a425d7763582bbc45e85129a807b2a2021a9687df262d2510225661"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.9"
-    sha256 cellar: :any, arm64_sonoma: "e3feada38f0130a9ca1f966252be6b30a85c29b273c210ecf7a5685fc8efd7e3"
-    sha256 cellar: :any, x86_64_linux: "f47708ecfafd41cbf4ccc502e509e1384245d0d283d1d2bba1f0f0c43428428c"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.10"
+    sha256 cellar: :any, arm64_sonoma: "e1acc1de1af1f3275c23ed18f7e0c977d0c54b4d607b955bd082b5064e3929f7"
+    sha256 cellar: :any, x86_64_linux: "604809a0749646433dcb4f19dacc7809dc911ab03db0cc721272c8ad9b368513"
   end
+
 
 
 
@@ -61,8 +62,8 @@ class Datahub < Formula
   end
 
   resource "anyio" do
-    url "https://files.pythonhosted.org/packages/ea/9a/c15a60547004a3f3cea20296c934f827ddd7bdba225a2e7e9fcb5ec48c80/anyio-4.15.0.tar.gz"
-    sha256 "b5c620ed540725e2579c31b17bb995b3bf02c9281c9cace04c7d186380bab85e"
+    url "https://files.pythonhosted.org/packages/a9/d2/f4d173e22df740bc37b1db102b386ba719b66e95b0f0d751f556b387e6d2/anyio-4.15.1.tar.gz"
+    sha256 "9f28306018cbd6d329e64a36d58256edff76dd996fe423bc957326e578b82a94"
   end
 
   resource "asgiref" do
