@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/a2/ca/86290add8bc81f6734d44f821d8d327daefe5edb9bbe5220f6c4e9721dc0/acryl_datahub-1.7.0.10.tar.gz"
-  sha256 "b94e9cc78a425d7763582bbc45e85129a807b2a2021a9687df262d2510225661"
+  url "https://files.pythonhosted.org/packages/40/fc/13aad305d9a89b5435376302933af846491e319c400fe18aa7b9101ceb2c/acryl_datahub-1.7.0.19.tar.gz"
+  sha256 "4d8c7227bda8ab75bf76a125e28c8f7314f4cd596ab0fb5f0723b7b2a82bbd92"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.10"
-    sha256 cellar: :any, arm64_sonoma: "e1acc1de1af1f3275c23ed18f7e0c977d0c54b4d607b955bd082b5064e3929f7"
-    sha256 cellar: :any, x86_64_linux: "604809a0749646433dcb4f19dacc7809dc911ab03db0cc721272c8ad9b368513"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.19"
+    sha256 cellar: :any, arm64_sequoia: "f133c16c5a634b1b1bc276d1a12f421dc3c7aa3929f1566c4dd043155ab8d648"
+    sha256 cellar: :any, x86_64_linux:  "b7ad934204a9f494482c1298b3227f4204c2ba5a32051edd33633cb6cc3253ea"
   end
+
 
 
 
@@ -47,8 +48,8 @@ class Datahub < Formula
   end
 
   resource "aiohttp" do
-    url "https://files.pythonhosted.org/packages/58/d9/22ce5786ac0c1653ae8b6c23bded02c1686d11f0dbb45b31ce128e0df985/aiohttp-3.14.3.tar.gz"
-    sha256 "9491196535a88924a60afd5b5f434b5b203b6cc616250878dbdb223a8f7844bc"
+    url "https://files.pythonhosted.org/packages/6c/4c/bdccd81e9ee225b69c60e7766c9a5b05364f118f4d383713b89a682d772d/aiohttp-3.14.5.tar.gz"
+    sha256 "5558a7f5a05af9ecf744af91e5baefc436f93c9333e656c27ec253f9a6bbe178"
   end
 
   resource "aiosignal" do
@@ -62,13 +63,13 @@ class Datahub < Formula
   end
 
   resource "anyio" do
-    url "https://files.pythonhosted.org/packages/a9/d2/f4d173e22df740bc37b1db102b386ba719b66e95b0f0d751f556b387e6d2/anyio-4.15.1.tar.gz"
-    sha256 "9f28306018cbd6d329e64a36d58256edff76dd996fe423bc957326e578b82a94"
+    url "https://files.pythonhosted.org/packages/a1/98/7e457a3b014976887a050561955c0b76e1e7e2d6e27b78ecef2ef80518f2/anyio-4.16.0.tar.gz"
+    sha256 "59bb03251907983d1603d27c3087ddb1e93299ea2163adcdba37899a4fb12ffb"
   end
 
   resource "asgiref" do
-    url "https://files.pythonhosted.org/packages/e6/26/3b59f2bdae5f640389becb1f673cded775287f5fc4f816309d9ca9a3f93d/asgiref-3.12.1.tar.gz"
-    sha256 "59dcb51c272ad209d59bed5708a64a333083e86017d7fcdd67498eeab7784340"
+    url "https://files.pythonhosted.org/packages/6b/90/f5fce14e95fccf53b58e8e2c47cd84d40d105d64073ae1ac75166db150e0/asgiref-3.13.0.tar.gz"
+    sha256 "034cc8cbf72d00553b4be256703ac545120b4e50af13b49dec99da899aeeecb4"
   end
 
   resource "attrs" do
@@ -92,13 +93,13 @@ class Datahub < Formula
   end
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/a3/c2/24167ea9858356b47a87a50d39908bfdb72ceeefe0041586e704e5376b3a/certifi-2026.7.22.tar.gz"
-    sha256 "741e2c3b351ddf169a738da9f2c048608ff7f2c5cc02f1ebc6b118bb090d5d55"
+    url "https://files.pythonhosted.org/packages/fd/11/b524cbd9bbdaca58608e4cf4053fd463417549e1959fa8d3aa18319f9555/certifi-2026.10.23.tar.gz"
+    sha256 "a9895e6e2758b371e0545e321a3a8fd1fcfd9829ada8824a936dfb16aaaf36cd"
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/e5/3f/143b048436775b0f76ac3eec145c019e8173ccc2885c8f20319b996d5e83/charset_normalizer-3.5.1.tar.gz"
-    sha256 "6117b84ea48435e5356dc737f5121485c30920ba43375fa7b434fd753df0eac3"
+    url "https://files.pythonhosted.org/packages/33/1c/f41d4e74c28ab327ff3acd36053f7ea506c55872d7a90b0fa71aa3ab0c89/charset_normalizer-3.5.2.tar.gz"
+    sha256 "39de2a259fc954455c57274dc94c79d5842774e1247a016aff30bc0efed0f4ef"
   end
 
   resource "click" do
@@ -117,8 +118,8 @@ class Datahub < Formula
   end
 
   resource "cramjam" do
-    url "https://files.pythonhosted.org/packages/2d/5f/e0fe688743fbd2b24e8662d276ae42ad1a2ea78d08850df8d706cce5013d/cramjam-2.12.1.tar.gz"
-    sha256 "75187b77a84b1f457f9555604775b70d04102af312224d03c873da59011bba31"
+    url "https://files.pythonhosted.org/packages/21/78/bfb048f7fcf70192081ad834e7bbde59af716bbdd4d2410ffd39357db068/cramjam-2.14.0.tar.gz"
+    sha256 "050095380dc01a7f3dc2b8bcd9de2cbf4a208a8aab32301c760ea3c280d641bd"
   end
 
   resource "deprecated" do
@@ -162,13 +163,13 @@ class Datahub < Formula
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/5f/f7/abb373e5757eaec4b922b92f97ec8d6d7e057cf06778247604fbc4e7c3f3/idna-3.19.tar.gz"
-    sha256 "5e0811a4383b21dc5838069f801c4fb62113b7447663d2530d2bd6e77b49bf15"
+    url "https://files.pythonhosted.org/packages/f5/08/8eea9d4b8302028f3abb2c0813953f7aec26d33b7a8960ed760e65ff29fa/idna-3.20.tar.gz"
+    sha256 "a7db850025b95ded1eae8a46181a1a6c56c92c96f0e2b005d9ff8dc0210cab44"
   end
 
   resource "ijson" do
-    url "https://files.pythonhosted.org/packages/3a/06/b31f040a8764336a11152e474a7abcb3782fedb0d1cdf78f442b82878c56/ijson-3.5.1.tar.gz"
-    sha256 "af40bd1a85f55db0b8b30715c858761306bd92d5590148636f75c3309e6e76bd"
+    url "https://files.pythonhosted.org/packages/75/61/4066af787ed25bfca02c3edd2d7fd489b1b5ca27b54b400b187e5f2865e7/ijson-3.6.0.tar.gz"
+    sha256 "ec8f9265524e724905ecf00bdd061c374baaa8d5045ef50425695fb06efb45f5"
   end
 
   resource "json-logic" do
@@ -197,13 +198,13 @@ class Datahub < Formula
   end
 
   resource "mixpanel" do
-    url "https://files.pythonhosted.org/packages/d6/cc/a4a5462b8529d30c44a1f39537049b5eff0134a0509a03a7e95acfe2790e/mixpanel-5.4.0.tar.gz"
-    sha256 "f80f10b689904831e81c326c50a4944c9260c1abda1bef6339ae346a6ca9a959"
+    url "https://files.pythonhosted.org/packages/01/04/d9f090359bc48320e66763ff12967ebd8ca64bea4a829eeeab9705de0b1a/mixpanel-5.4.1.tar.gz"
+    sha256 "633f82d478e671732f13b939ba16b8a1689b0a605885b871f3bcf6dbaf6667ac"
   end
 
   resource "multidict" do
-    url "https://files.pythonhosted.org/packages/1a/c2/c2d94cbe6ac1753f3fc980da97b3d930efe1da3af3c9f5125354436c073d/multidict-6.7.1.tar.gz"
-    sha256 "ec6652a1bee61c53a3e5776b6049172c53b6aaba34f18c9ad04f82712bac623d"
+    url "https://files.pythonhosted.org/packages/7b/6b/29ef8e752f5854dcc267ded0652c475bec99b86f255957a0d4fcad657b18/multidict-7.2.1.tar.gz"
+    sha256 "e8af3e6f1bdbc31fd762b094133b478b89988eaebc63cbe82b1d9e3bbd15cede"
   end
 
   resource "mypy-extensions" do
@@ -222,8 +223,8 @@ class Datahub < Formula
   end
 
   resource "propcache" do
-    url "https://files.pythonhosted.org/packages/ec/44/c87281c333769159c50594f22610f77398a47ccbfbbf23074e744e86f87c/propcache-0.5.2.tar.gz"
-    sha256 "01c4fc7480cd0598bb4b57022df55b9ca296da7fc5a8760bd8451a7e63a7d427"
+    url "https://files.pythonhosted.org/packages/b3/9a/9fbf4e4ec0c2d7f1c32519fff782ef467859b8faa9fbc5331a96f6395d43/propcache-0.5.4.tar.gz"
+    sha256 "ff6b113f50bc066a698db5d944d2c6dc7507168dd3341e255a8892fd0715a558"
   end
 
   resource "psutil" do
@@ -232,13 +233,13 @@ class Datahub < Formula
   end
 
   resource "pydantic" do
-    url "https://files.pythonhosted.org/packages/ae/54/ecab642b3bed45f7d5f59b38443dcb36ef50f85af192e6ece103dbfe9587/pydantic-2.11.10.tar.gz"
-    sha256 "dc280f0982fbda6c38fada4e476dc0a4f3aeaf9c6ad4c28df68a666ec3c61423"
+    url "https://files.pythonhosted.org/packages/9f/d5/b4867fa7c7f04c34997d7d8aad744f64d210bb99d67cf18bf3fb1eea1aed/pydantic-2.14.2.tar.gz"
+    sha256 "fb7b2db6cefe8414dd612edeede49c4c433acb0432b0f92b95024e45f66c505d"
   end
 
   resource "pydantic-core" do
-    url "https://files.pythonhosted.org/packages/ad/88/5f2260bdfae97aabf98f1778d43f69574390ad787afb646292a638c923d4/pydantic_core-2.33.2.tar.gz"
-    sha256 "7cb8bc3605c29176e1b105350d2e6474142d7c1bd1d9327c4a9bdb46bf827acc"
+    url "https://files.pythonhosted.org/packages/af/8e/23ec1021834e35041fbb2f10946141e6acdfd39379c45cc4d65a4e8a1d98/pydantic_core-2.50.2.tar.gz"
+    sha256 "1b0e8dc3932cf4e9ed5727570325cacc716b9409ffc794a221c0ccc72e8eb775"
   end
 
   resource "python-dateutil" do
@@ -252,8 +253,8 @@ class Datahub < Formula
   end
 
   resource "python-utils" do
-    url "https://files.pythonhosted.org/packages/5d/71/ec6665d4ce42ee5a59fffd31a4d5164f92da15ccb8c758dba13d2419ea53/python_utils-4.0.1.tar.gz"
-    sha256 "4e8e8ecaba3862f843a60c1982c99cda23b522f417006a807996a876c18beb8d"
+    url "https://files.pythonhosted.org/packages/c9/e7/064880019d2f205b837e5c463eb472b36e220d380e5733e49911975f7072/python_utils-4.1.4.tar.gz"
+    sha256 "a8c01f8c0b5a113fa1ab663308bb8a4773afec3cc8f9e6baeb756ac97377f8ce"
   end
 
   resource "pyyaml" do
@@ -277,8 +278,8 @@ class Datahub < Formula
   end
 
   resource "rpds-py" do
-    url "https://files.pythonhosted.org/packages/aa/2a/9618a122aeb2a169a28b03889a2995fe297588964333d4a7d67bdf46e147/rpds_py-2026.6.3.tar.gz"
-    sha256 "1cebd1337c242e4ec2293e541f712b2da849b29f48f0c293684b71c0632625d4"
+    url "https://files.pythonhosted.org/packages/42/68/3bd46b8a5e01d3c2ebdf9c5e9497912e3fe0cde02bac21a7130ca866e403/rpds_py-2026.9.1.tar.gz"
+    sha256 "4793ef7f78268b124b73fa933440f01d258bbae01de9fa53e9080c9ab0425a12"
   end
 
   resource "ruamel-yaml" do
@@ -287,13 +288,8 @@ class Datahub < Formula
   end
 
   resource "sentry-sdk" do
-    url "https://files.pythonhosted.org/packages/9a/e7/c504a4bd2d95df2e0ab73714a9161ff1cf6ff1486922685e5f46dfd9eba8/sentry_sdk-2.68.1.tar.gz"
-    sha256 "6a97895230b04bc35d4d8d2e51e3b9e21902dfb0086ccf1f131a80c15c7b997a"
-  end
-
-  resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/0d/1c/73e719955c59b8e424d015ab450f51c0af856ae46ea2da83eba51cc88de1/setuptools-81.0.0.tar.gz"
-    sha256 "487b53915f52501f0a79ccfd0c02c165ffe06631443a886740b91af4b7a5845a"
+    url "https://files.pythonhosted.org/packages/c5/3b/1e47acf2456781c26e12007379ecc154bf310b8f64d40390d78b791d55c3/sentry_sdk-2.73.0.tar.gz"
+    sha256 "4a2ab97b16e4693c325ab361c7bbbb346dbc7d0bc0150922d795a25bac8d5280"
   end
 
   resource "six" do
@@ -327,18 +323,18 @@ class Datahub < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/53/0c/06f8b233b8fd13b9e5ee11424ef85419ba0d8ba0b3138bf360be2ff56953/urllib3-2.7.0.tar.gz"
-    sha256 "231e0ec3b63ceb14667c67be60f2f2c40a518cb38b03af60abc813da26505f4c"
+    url "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz"
+    sha256 "63bf2ead4c879426ebf22ef2a781eeb4aa3b4ae798a0435506f8687fd5bb9b63"
   end
 
   resource "wrapt" do
-    url "https://files.pythonhosted.org/packages/65/ba/8dc25478ed234dacc7d83c671634f347d0bdfb65bf0502f41879cf2f15a9/wrapt-2.4.0.tar.gz"
-    sha256 "7082fc1f94b020ac275870c4af71b09cff22876fe6e9c4c0ad01ea21d217b288"
+    url "https://files.pythonhosted.org/packages/9c/b0/f752d19e1e83ab8bd64aeccfde32ff086aee3ef08520f7340b69a8d0a4d2/wrapt-2.5.2.tar.gz"
+    sha256 "551cb49e88b3722faad780303833bc4fa70685fb1773270fb98b40d39d9fddbf"
   end
 
   resource "yarl" do
-    url "https://files.pythonhosted.org/packages/31/33/ebe9e3d1f86c7a0b51094c0a146392045ca1631d2664889539dec8088a33/yarl-1.24.5.tar.gz"
-    sha256 "e81b83143bee16329c23db3c1b2d82b29892fcbcb849186d2f6e98a5abe9a57f"
+    url "https://files.pythonhosted.org/packages/75/16/e8be8e2fb175bbf41a0680381a319f1199fae256588241a2ac8677eafb49/yarl-1.25.1.tar.gz"
+    sha256 "03dd38de09bc213e9a8b29761eec33ee1d5318dac0e49d8af36e4d27830e23a7"
   end
 
   def install
