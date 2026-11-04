@@ -20,10 +20,15 @@ on:
         description: "(Re)build and bottle the current PyPI version even if the formula already matches"
         type: boolean
         default: false
+      test_alert:
+        description: "Only post a test message to the Slack alert channel (checks the token/channel setup), then stop"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
   pull-requests: write
+  issues: write
 
 concurrency:
   group: update-formula
@@ -36,6 +41,8 @@ jobs:
     outputs:
       bump: ${{ steps.v.outputs.bump }}
       new: ${{ steps.v.outputs.latest }}
+      stale: ${{ steps.v.outputs.stale }}
+      status: ${{ steps.v.outputs.status }}
     steps:
       - uses: actions/checkout@v5
       - id: v
@@ -54,14 +61,48 @@ jobs:
           upload_time=$(curl -fsS "https://pypi.org/pypi/acryl-datahub/${latest}/json" | jq -r '[.urls[].upload_time_iso_8601] | min')
           age_hours=$(( ($(date -u +%s) - $(date -u -d "$upload_time" +%s)) / 3600 ))
 
-          if [ "${{ inputs.force }}" = "true" ]; then
+          # Staleness: how long has PyPI had a release the formula doesn't?
+          # Measured from the FIRST release newer than the formula (not the
+          # latest one), so a steady stream of new releases can't hide a
+          # pipeline that hasn't merged anything in weeks. The report job
+          # alerts once this passes 72h.
+          behind_hours=$(curl -fsS https://pypi.org/pypi/acryl-datahub/json | python3 -c '
+          import json, sys, datetime as dt
+          meta = json.loads(sys.stdin.read(), strict=False)
+          cur = sys.argv[1]
+          def first_upload(files):
+              ts = [f["upload_time_iso_8601"] for f in files if not f.get("yanked")]
+              return min(ts) if ts else None
+          def key(v):
+              # Final releases only (skip rc/dev/post), compared numerically.
+              return tuple(map(int, v.split("."))) if v.replace(".", "").isdigit() else None
+          up = {v: first_upload(f) for v, f in meta["releases"].items()}
+          up = {v: t for v, t in up.items() if t and key(v)}
+          if cur not in up:
+              print(-1); sys.exit()
+          newer = [t for v, t in up.items() if key(v) > key(cur)]
+          if not newer:
+              print(0); sys.exit()
+          t = dt.datetime.fromisoformat(min(newer).replace("Z", "+00:00"))
+          print(int((dt.datetime.now(dt.timezone.utc) - t).total_seconds() // 3600))
+          ' "$current")
+          if [ "$behind_hours" -ge 72 ]; then
+            echo "stale=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "stale=false" >> "$GITHUB_OUTPUT"
+          fi
+          echo "status=PyPI ${latest} / formula ${current} (formula behind PyPI for ${behind_hours}h)" >> "$GITHUB_OUTPUT"
+
+          if [ "${{ inputs.test_alert }}" = "true" ]; then
+            echo "bump=false" >> "$GITHUB_OUTPUT"
+          elif [ "${{ inputs.force }}" = "true" ]; then
             echo "bump=true" >> "$GITHUB_OUTPUT"
           elif [ "$latest" != "$current" ] && [ "$age_hours" -ge 25 ]; then
             echo "bump=true" >> "$GITHUB_OUTPUT"
           else
             echo "bump=false" >> "$GITHUB_OUTPUT"
           fi
-          echo "PyPI: $latest (uploaded $upload_time, ${age_hours}h ago) | Formula: $current | force: ${{ inputs.force }}"
+          echo "PyPI: $latest (uploaded $upload_time, ${age_hours}h ago) | Formula: $current (behind ${behind_hours}h) | force: ${{ inputs.force }}"
 
   # Produce the bumped formula once and share it; both bottle builds and the
   # publish step start from this identical file.
@@ -284,3 +325,111 @@ jobs:
           for i in 1 2 3 4 5 6; do
             gh pr merge "$branch" --squash --delete-branch && break || sleep 10
           done
+
+  # Make breakage loud. The pipeline once failed hourly for six weeks without
+  # anyone noticing, so after every run:
+  #   - problem (bump failed twice in a row, or formula >72h behind PyPI):
+  #     open a `tap-health` issue and post to Slack; while it stays open,
+  #     comment + re-post at most once a day.
+  #   - healthy again: close the issue and post a recovery message.
+  # Slack is posted via chat.postMessage with the SLACK_BOT_TOKEN secret, or
+  # the org CI_NOTIFIER_SLACK_BOT_TOKEN if shared with this repo (the
+  # bot must be in the channel). Without the secret, the issue still opens and
+  # the Slack step logs a warning. Channel defaults to #ingestion-automations;
+  # override with the SLACK_ALERT_CHANNEL repo variable (a channel ID).
+  report:
+    needs: [prepare, generate, bottle, publish]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN || secrets.CI_NOTIFIER_SLACK_BOT_TOKEN }}
+      SLACK_CHANNEL: ${{ vars.SLACK_ALERT_CHANNEL || 'C05SL1JUD6F' }}
+      NEEDS: ${{ toJSON(needs) }}
+      STALE: ${{ needs.prepare.outputs.stale }}
+      STATUS: ${{ needs.prepare.outputs.status }}
+      TEST_ALERT: ${{ inputs.test_alert }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    steps:
+      - name: Report tap health
+        run: |
+          slack() {
+            if [ -z "$SLACK_BOT_TOKEN" ]; then
+              echo "::warning::SLACK_BOT_TOKEN is not set; skipping Slack message: $1"
+              return 0
+            fi
+            payload=$(jq -n --arg c "$SLACK_CHANNEL" --arg t "$1" \
+              '{channel: $c, text: $t, unfurl_links: false, unfurl_media: false}')
+            resp=$(curl -sS -X POST https://slack.com/api/chat.postMessage \
+              -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+              -H "Content-Type: application/json; charset=utf-8" \
+              --data "$payload")
+            if [ "$(jq -r .ok <<<"$resp")" != "true" ]; then
+              echo "::warning::Slack post failed: $(jq -r '.error // .' <<<"$resp")"
+            fi
+          }
+
+          if [ "$TEST_ALERT" = "true" ]; then
+            slack ":test_tube: homebrew-tap alert test. If you can read this, failure alerts will reach this channel. <${RUN_URL}|run>"
+            exit 0
+          fi
+
+          failed=$(jq -r '[to_entries[] | select(.value.result == "failure") | .key] | join(", ")' <<<"$NEEDS")
+          publish=$(jq -r '.publish.result' <<<"$NEEDS")
+
+          problem=""
+          if [ -n "$failed" ]; then
+            problem="the bump workflow failed (jobs: ${failed})."
+          fi
+          # A run that just published has caught up, whatever prepare measured.
+          if [ "$STALE" = "true" ] && [ "$publish" != "success" ]; then
+            problem="${problem:+$problem }The formula is stale: ${STATUS}."
+          fi
+
+          label="tap-health"
+          gh label create "$label" --color d73a4a \
+            --description "Automated: Homebrew bump pipeline is unhealthy" 2>/dev/null || true
+          issue=$(gh issue list --label "$label" --state open --json number,url \
+            -q '.[0] | select(.) | "\(.number) \(.url)"')
+          issue_num=${issue%% *}
+          issue_url=${issue#* }
+
+          if [ -z "$problem" ]; then
+            if [ -n "$issue" ]; then
+              gh issue close "$issue_num" --comment "Recovered in ${RUN_URL}. ${STATUS}."
+              slack ":white_check_mark: *homebrew-tap* recovered: ${STATUS}. <${issue_url}|issue> closed."
+            fi
+            echo "Healthy: ${STATUS}"
+            exit 0
+          fi
+
+          echo "Problem: ${problem}"
+
+          if [ -z "$issue" ]; then
+            # Ignore a single failed run (e.g. a PyPI or Homebrew blip). Alert
+            # if the previous run also failed, or the formula is already stale.
+            prev=$(gh run list --workflow update-formula.yml --status completed --limit 1 \
+              --json conclusion -q '.[0].conclusion')
+            if [ "$STALE" != "true" ] && [ "$prev" != "failure" ]; then
+              echo "First failure in a row (previous run: ${prev:-none}); alerting if the next run also fails."
+              exit 0
+            fi
+            issue_url=$(gh issue create --label "$label" \
+              --title "Homebrew tap: formula bump pipeline is unhealthy" \
+              --body "$(printf '%s\n\n- %s\n- Latest run: %s\n\nThis issue was opened by the report job in update-formula.yml. It closes itself when a run is healthy again (no failure and the formula is less than 72h behind PyPI).' \
+                "Automated alert: ${problem}" "${STATUS}" "${RUN_URL}")")
+            slack ":rotating_light: *homebrew-tap*: ${problem} <${RUN_URL}|failed run> · <${issue_url}|tracking issue>"
+            exit 0
+          fi
+
+          # Already open: remind at most once a day.
+          last=$(gh issue view "$issue_num" --json createdAt,comments \
+            -q '[.createdAt, .comments[].createdAt] | max')
+          if [ $(( $(date -u +%s) - $(date -u -d "$last" +%s) )) -ge 86400 ]; then
+            gh issue comment "$issue_num" --body "Still unhealthy: ${problem} Latest run: ${RUN_URL}"
+            slack ":warning: *homebrew-tap* still unhealthy (24h+): ${problem} <${RUN_URL}|latest run> · <${issue_url}|tracking issue>"
+          else
+            echo "Issue #${issue_num} already open and reminded within 24h."
+          fi
