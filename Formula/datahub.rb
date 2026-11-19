@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/76/ec/ffa30713d1d622f9b3d14b04074fdc2b700cfcb19c03c7412859d9a52a0d/acryl_datahub-1.7.0.20.tar.gz"
-  sha256 "6a50747622b53bd080648e353f635e9e8eb73c5f130855b33aa6a1c3227704dc"
+  url "https://files.pythonhosted.org/packages/bb/25/46a0e1be8ef77442b299704bfa3e431f89017681f37fe40fef2843b3e357/acryl_datahub-1.8.0.tar.gz"
+  sha256 "82f56f862617a69e0e2a697c18f99573b17c2c5993ff86001565e6b5ff64c000"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.7.0.20"
-    sha256 cellar: :any, arm64_sequoia: "82407f079b2d2a9527354f231db44e767ad634bc0fa82b081a4f8d21d5c94ba6"
-    sha256 cellar: :any, x86_64_linux:  "a6ff83bcf64cbca9666f379134fb863f28c48f003620c3afd6cd98cc7c079ade"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.8.0"
+    sha256 cellar: :any, arm64_sequoia: "fe3504f7769aad7262ff0fc93211ac86a10383c40eafe514cd5cc58dcf35abe8"
+    sha256 cellar: :any, x86_64_linux:  "04647b1d3d562373549caa2c4c2d0b8780706e3d958453f676e54f0dbaac6fe8"
   end
+
 
 
 
@@ -219,8 +220,8 @@ class Datahub < Formula
   end
 
   resource "progressbar2" do
-    url "https://files.pythonhosted.org/packages/1e/dd/63ac006e821594bf6ec5cd7557f16c44d8c209108578ea01bc1f715baafc/progressbar2-4.7.0.tar.gz"
-    sha256 "f4122439b00dca41424f787ea5148478685d265742078c1c7c3ede31f06bd001"
+    url "https://files.pythonhosted.org/packages/d4/cb/6c2cb8c9652fdfe1bd15ae723e5e97a77316daf9b3c6835b8b35ef07ece4/progressbar2-4.7.1.tar.gz"
+    sha256 "e7e1c1b6fe6495051c41c44fc50980ba37f8d874deb94ea680528b1a0442ff1a"
   end
 
   resource "propcache" do
@@ -254,8 +255,8 @@ class Datahub < Formula
   end
 
   resource "python-utils" do
-    url "https://files.pythonhosted.org/packages/86/9b/84f99b984fe17108049d990afb36a594688d50564ea1033dd2e0e65eb175/python_utils-4.2.0.tar.gz"
-    sha256 "f3d53b05640136e5eb2e685840e084071347f127f9bf30ddd05c81a6d00f01ad"
+    url "https://files.pythonhosted.org/packages/f6/bf/e4cc07248ca65fe5065a9712efeace1eba6b0c77c72fc24cbfc8a79ddd80/python_utils-4.2.2.tar.gz"
+    sha256 "6c51c46e600c67ad5f16c4205ba875ced4372e560561c5aa3cf52ff1d4657471"
   end
 
   resource "pyyaml" do
@@ -289,8 +290,8 @@ class Datahub < Formula
   end
 
   resource "sentry-sdk" do
-    url "https://files.pythonhosted.org/packages/8e/7f/1b16ab4aee53cc5db976bac12e6df5d562aae3880965200cef812e7121d9/sentry_sdk-2.74.0.tar.gz"
-    sha256 "dd91d75aacaef636006b579ac3ddb2fdbc9dce35f00f4b353b6b1b110c6b256a"
+    url "https://files.pythonhosted.org/packages/d2/95/121b20d75e738d249a0e26e6476a2acb178673e8228002748fc0cd85ce55/sentry_sdk-2.75.0.tar.gz"
+    sha256 "c38ac2d4b2435c11da821e173bb9d9088c98f41ae92f559ce0e424170a8e1a29"
   end
 
   resource "six" do
