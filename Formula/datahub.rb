@@ -3,8 +3,8 @@ class Datahub < Formula
 
   desc "CLI for DataHub, the open-source context platform for humans and AI agents"
   homepage "https://docs.datahub.com/"
-  url "https://files.pythonhosted.org/packages/d0/b6/a9912f367d525972b2575ab07703b698dfaaa93e97b4d9f70e1849a3f8a8/acryl_datahub-1.9.0.1.tar.gz"
-  sha256 "9a7fdcdbcea7fa97026d7648049454fa4818069d617716d14e60ab578d7b839f"
+  url "https://files.pythonhosted.org/packages/36/28/3c23062e642738ed8eef304b9cfa135fc598459c48488c63e7da4562094a/acryl_datahub-1.9.0.2.tar.gz"
+  sha256 "2bb11f271af5bab5cf4c524a62a1c5962a799fa95d1b44162819c33a66adb462"
   license "Apache-2.0"
   head "https://github.com/datahub-project/datahub.git", branch: "master"
 
@@ -16,10 +16,11 @@ class Datahub < Formula
   end
 
   bottle do
-    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.9.0.1"
-    sha256 cellar: :any, arm64_sequoia: "b3d3fa7959feed47b7b685a732259f8033b8fb5d76698c2fe277a9bd8088f96a"
-    sha256 cellar: :any, x86_64_linux:  "68f51e4bcfa73b780b9869f3f9007bae68f37c4825ed95aeaca11f0635cb10ec"
+    root_url "https://github.com/datahub-project/homebrew-tap/releases/download/datahub-1.9.0.2"
+    sha256 cellar: :any, arm64_sequoia: "cab77baf0335ed7c2cf6e40af7a486fb32fe3f7a1cadd9b9e8a4470fa24bf33f"
+    sha256 cellar: :any, x86_64_linux:  "3559cd25c359aa00bd1e6f0fbaac960feac7048b76a33b9e5817f99518c80e81"
   end
+
 
 
 
@@ -157,8 +158,8 @@ class Datahub < Formula
   end
 
   resource "httpx" do
-    url "https://files.pythonhosted.org/packages/b1/df/48c586a5fe32a0f01324ee087459e112ebb7224f646c0b5023f5e79e9956/httpx-0.28.1.tar.gz"
-    sha256 "75e98c5f16b0f35b567856f597f06ff2270a374470a5c2392242528e3e3e42fc"
+    url "https://files.pythonhosted.org/packages/9a/d5/b4d2c4d397b7c0222635cd069098f232fb5cba31f6749e77b339e263b52c/httpx-0.29.0.tar.gz"
+    sha256 "700928ee6c1f4213795e67c47eba8f8553639069fea89199f71d654e38edc593"
   end
 
   resource "humanfriendly" do
